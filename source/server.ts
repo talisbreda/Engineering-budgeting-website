@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import logging from './config/logging';
 import config from './config/config';
-import bookRoutes from './routes/sample';
+import userRoutes from './routes/user';
 
 const NAMESPACE = 'Server';
 const router = express();
@@ -39,7 +39,7 @@ router.use((req, res, next) => {
 });
 
 /** Routes go here */
-router.use('/books', bookRoutes);
+router.use('/users', userRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {
