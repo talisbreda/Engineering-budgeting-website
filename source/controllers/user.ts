@@ -29,39 +29,52 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
             });
         }
 
-        let query = `INSERT INTO usuario (nome, email, senha) VALUES ("${nome}", "${email}", "${hash}")`;
+        let emailCheck = `SELECT email FROM usuario WHERE email = "${email}"`;
 
-        Connect()
-            .then((connection) => {
-                Query<IMySQLResult>(connection, query)
-                    .then((result) => {
-                        logging.info(NAMESPACE, `User with id ${result.insertId} inserted`);
+        Connect().then((connection) => {
+            Query<String>(connection, emailCheck).then((notUnique) => {
+                if (notUnique.length > 0) {
+                    logging.info(NAMESPACE, `E-mail ${email} is already being used`);
 
-                        return res.status(201).json(result);
-                    })
-                    .catch((error) => {
-                        logging.error(NAMESPACE, error.message, error);
-                        return res.status(500).json({
-                            message: error.message,
-                            error
-                        });
+                    return res.status(400).json({
+                        message: 'The e-mail you are trying to register is already in use'
                     });
-            })
-            .catch((error) => {
-                logging.error(NAMESPACE, error.message, error);
+                } else {
+                    let query = `INSERT INTO usuario (nome, email, senha) VALUES ("${nome}", "${email}", "${hash}")`;
+                    Connect()
+                        .then((connection) => {
+                            Query<IMySQLResult>(connection, query)
+                                .then((result) => {
+                                    logging.info(NAMESPACE, `User with id ${result.insertId} inserted`);
 
-                return res.status(500).json({
-                    message: error.message,
-                    error
-                });
+                                    return res.status(201).json(result);
+                                })
+                                .catch((error) => {
+                                    logging.error(NAMESPACE, error.message, error);
+                                    return res.status(500).json({
+                                        message: error.message,
+                                        error
+                                    });
+                                });
+                        })
+                        .catch((error) => {
+                            logging.error(NAMESPACE, error.message, error);
+
+                            return res.status(500).json({
+                                message: error.message,
+                                error
+                            });
+                        });
+                }
             });
+        });
     });
 };
 
 const login = (req: Request, res: Response, next: NextFunction) => {
-    let { nome, senha } = req.body;
+    let { email, senha } = req.body;
 
-    let query = `SELECT * FROM usuario WHERE nome = "${nome}"`;
+    let query = `SELECT * FROM usuario WHERE email = "${email}"`;
 
     Connect()
         .then((connection) => {
@@ -118,7 +131,7 @@ const login = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-    let query = `SELECT id_usuario, nome FROM usuario`;
+    let query = `SELECT id_usuario, nome, email FROM usuario`;
 
     Connect()
         .then((connection) => {
