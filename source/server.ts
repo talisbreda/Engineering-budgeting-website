@@ -4,12 +4,15 @@ import express from 'express';
 import logging from './config/logging';
 import config from './config/config';
 import userRoutes from './routes/user';
+require('dotenv').config();
 
 const NAMESPACE = 'Server';
 const router = express();
+const axios = require('axios');
 
 /** Log the request */
 router.use((req, res, next) => {
+    // console.log('A chave é: ' + process.env.KEY);
     /** Log the req */
     logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
@@ -39,7 +42,7 @@ router.use((req, res, next) => {
 });
 
 /** Routes go here */
-router.use('/users', userRoutes);
+router.use('/', userRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {

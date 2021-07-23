@@ -59,7 +59,6 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
                         })
                         .catch((error) => {
                             logging.error(NAMESPACE, error.message, error);
-
                             return res.status(500).json({
                                 message: error.message,
                                 error
@@ -81,32 +80,36 @@ const login = (req: Request, res: Response, next: NextFunction) => {
             Query<IUser[]>(connection, query)
                 .then((users) => {
                     try {
-                        bcryptjs.compare(senha, users[0].senha, (error, result) => {
-                            if (error) {
-                                return res.status(401).json({
-                                    message: 'Password mismatch'
-                                });
-                            } else if (result) {
-                                signJWT(users[0], (_error, token) => {
-                                    if (_error) {
-                                        return res.status(401).json({
-                                            message: 'Unable to sign JWT',
-                                            error: _error
-                                        });
-                                    } else if (token) {
-                                        return res.status(200).json({
-                                            message: 'Auth Successful',
-                                            token,
-                                            user: users[0]
-                                        });
-                                    }
-                                });
-                            } else {
-                                return res.status(401).json({
-                                    message: 'Password mismatch'
-                                });
-                            }
-                        });
+                        if (Array.from(users).length > 0) {
+                            bcryptjs.compare(senha, users[0].senha, (error, result) => {
+                                if (error) {
+                                    return res.status(401).json({
+                                        message: 'Password mismatch'
+                                    });
+                                } else if (result) {
+                                    signJWT(users[0], (_error, token) => {
+                                        if (_error) {
+                                            return res.status(401).json({
+                                                message: 'Unable to sign JWT',
+                                                error: _error
+                                            });
+                                        } else if (token) {
+                                            return res.status(200).json({
+                                                message: 'Auth Successful',
+                                                token,
+                                                user: users[0]
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    return res.status(401).json({
+                                        message: 'Password mismatch'
+                                    });
+                                }
+                            });
+                        } else {
+                            res.status(400).json({ message: 'usuário não encontrado' });
+                        }
                     } catch (e) {
                         console.error(e);
                     }
