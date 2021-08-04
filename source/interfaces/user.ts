@@ -1,5 +1,5 @@
 export default interface IUser {
-    _id: number;
+    id_usuario: number;
     nome: string;
     email: string;
     senha: string;

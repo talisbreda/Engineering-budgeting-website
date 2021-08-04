@@ -4,9 +4,11 @@ import { Connect, Query } from '../config/mysql';
 import bcryptjs from 'bcryptjs';
 import signJWT from '../functions/signJWT';
 import IUser from '../interfaces/user';
+import IProject from '../interfaces/project';
 import IMySQLResult from '../interfaces/result';
 import { createConnection } from 'mysql';
 import { sign } from 'jsonwebtoken';
+import { connect } from '../routes/user';
 
 const NAMESPACE = 'User';
 
@@ -163,82 +165,146 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    logging.info(NAMESPACE, 'Inserting books');
-
-    let { nome, email, senha } = req.body;
-
-    let query = `INSERT INTO usuario (nome, email, senha) VALUES ("${nome}", "${email}", "${senha}")`;
+const getAllProjects = async (req: Request, res: Response, next: NextFunction) => {
+    let query = `SELECT * FROM projeto`;
 
     Connect()
         .then((connection) => {
-            Query(connection, query)
-                .then((result) => {
-                    logging.info(NAMESPACE, 'Book created: ', result);
-
+            Query<IProject[]>(connection, query)
+                .then((projects) => {
                     return res.status(200).json({
-                        result
+                        projects,
+                        count: projects.length
                     });
                 })
                 .catch((error) => {
                     logging.error(NAMESPACE, error.message, error);
-
-                    return res.status(200).json({
+                    return res.status(500).json({
                         message: error.message,
                         error
                     });
-                })
-                .finally(() => {
-                    logging.info(NAMESPACE, 'Closing connection.');
-                    connection.end();
                 });
         })
         .catch((error) => {
             logging.error(NAMESPACE, error.message, error);
 
-            return res.status(200).json({
+            return res.status(500).json({
                 message: error.message,
                 error
             });
         });
 };
 
-const getUsers = async (req: Request, res: Response, next: NextFunction) => {
-    logging.info(NAMESPACE, 'Getting all books.');
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    let { id } = req.body;
 
-    let query = `SELECT * FROM usuario`;
+    let query = `DELETE FROM usuario WHERE id_usuario = ${id}`;
 
-    Connect()
-        .then((connection) => {
-            Query(connection, query)
-                .then((results) => {
-                    logging.info(NAMESPACE, 'Retrieved books: ', results);
-
-                    return res.status(200).json({
-                        results
-                    });
-                })
-                .catch((error) => {
-                    logging.error(NAMESPACE, error.message, error);
-
-                    return res.status(200).json({
-                        message: error.message,
-                        error
-                    });
-                })
-                .finally(() => {
-                    logging.info(NAMESPACE, 'Closing connection.');
-                    connection.end();
+    Connect().then((connection) => {
+        Query(connection, query)
+            .then(() => {
+                return res.status(200).json({
+                    message: 'Usuário excluído com sucesso'
                 });
-        })
-        .catch((error) => {
-            logging.error(NAMESPACE, error.message, error);
-
-            return res.status(200).json({
-                message: error.message,
-                error
+            })
+            .catch((error) => {
+                logging.error(NAMESPACE, error.message, error);
+                return res.status(500).json({
+                    message: error.message,
+                    error
+                });
             });
-        });
+    });
 };
 
-export default { createUser, getUsers, validateToken, register, login, getAllUsers };
+const deleteProject = async (req: Request, res: Response, next: NextFunction) => {
+    let { id } = req.body;
+
+    let query = `DELETE FROM projeto WHERE id_projeto = ${id}`;
+
+    Connect().then((connection) => {
+        Query(connection, query)
+            .then(() => {
+                return res.status(200).json({
+                    message: 'Projeto excluído com sucesso'
+                });
+            })
+            .catch((error) => {
+                logging.error(NAMESPACE, error.message, error);
+                return res.status(500).json({
+                    message: error.message,
+                    error
+                });
+            });
+    });
+};
+
+const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+    let { id, nome, email } = req.body;
+
+    let query = `UPDATE usuario SET nome='${nome}', email='${email}' WHERE id_usuario=${id}`;
+
+    Connect().then((connection) => {
+        Query<IUser>(connection, query)
+            .then((user) => {
+                return res.status(200).json({
+                    user
+                });
+            })
+            .catch((error) => {
+                logging.error(NAMESPACE, error.message, error);
+                return res.status(500).json({
+                    message: error.message,
+                    error
+                });
+            });
+    });
+};
+
+const updateProject = async (req: Request, res: Response, next: NextFunction) => {
+    let { id, usuario_fk, parede_fk, piso_fk, telhado_fk, acabamento_fk, lado_a, lado_b, lado_c, lado_d, altura } = req.body;
+
+    let query = `UPDATE 
+                    projeto 
+                SET 
+                    usuario_fk = ${usuario_fk},
+                    parede_fk = ${parede_fk}, 
+                    piso_fk = ${piso_fk},
+                    telhado_fk = ${telhado_fk},
+                    acabamento_fk = ${acabamento_fk},
+                    lado_a = ${lado_a},
+                    lado_b = ${lado_b},
+                    lado_c = ${lado_c},
+                    lado_d = ${lado_d},
+                    altura = ${altura}
+                WHERE 
+                    id_projeto=${id}`;
+
+    Connect().then((connection) => {
+        Query<IUser>(connection, query)
+            .then((project) => {
+                return res.status(200).json({
+                    project
+                });
+            })
+            .catch((error) => {
+                logging.error(NAMESPACE, error.message, error);
+                return res.status(500).json({
+                    message: error.message,
+                    error
+                });
+            });
+    });
+};
+
+export default {
+    validateToken,
+    register,
+    login,
+    getAllUsers,
+    getAllProjects,
+    deleteUser,
+    deleteProject,
+    updateUser,
+    updateProject
+};
