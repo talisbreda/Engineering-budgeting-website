@@ -2,82 +2,88 @@
     --font-roboto: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-body, form {
+#header {
+    border: 2px solid black;
+    border-left: 0;
+    height: 15vh;
+    width: 75vw;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
 }
 
-img {
-    margin-top: 5vh;
-}
-
-.titleLabel {
-    margin-top: 3vh;
-    font-size: 30px;
-    font-weight: bold;
+#header > h2 {
     font-family: var(--font-roboto);
-    margin-bottom: 1vh;
-}
-
-.inputLabel {
-    margin-top: 2vh;
-    width:  30vh;
-    font-weight: bold;
-    font-family: var(--font-roboto);
-    font-size: 18px;
-}
-
-.inputData {
-    margin-top: 0,5vh;
-    width: 30vh;
-    height: 5vh;
-    border: 1px solid black;
-    border-radius: 10px;
-
-    font-size: 16px;
-    font-family: var(--font-roboto);
+    width: 65vw; 
     text-align: center;
+}
+
+#header > img {
+   height: 8vh;
+   margin-left: 1vh;
+}
+
+body {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
 }
 
-.inputData::placeholder {
-    font-size: 16px;
+#sidebar {
+    border: 2px solid black;
+    width: 25vw;
+    max-width: 360px;
+    height: 100vh;
 }
 
-.inputData:focus {
-    outline: transparent
-}
-
-a {
-    margin-top: 3vh;
-    font-family: var(--font-roboto);
-    font-size: 15px;
-    color: blue;
-}
-
-a:hover {
-    color: darkblue;
-}
-
-button {
-    background-color: deepskyblue;
-    border: 0;
-    border-radius: 10px;
-    width: 15vh;
-    height: 5vh;
+#sidebar > img {
+    max-width: 4vh;
     margin-top: 4vh;
-    font-weight: bold;
-    font-family: var(--font-roboto);
-    font-size: 16px;
+    margin-left: 1vh;
 }
 
-button:hover {
-    background-color: #0aa8ef;
-    transition: 100ms;
-    cursor: pointer
+#sidebar > img:hover {
+    cursor: pointer;
+}
+
+.sidebarOptions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebarOptions > img {
+    max-width: 3vh;
+    max-height: 3vh;
+    margin-right: 2vh;
+    margin-left: 2vh;
+}
+
+.sidebarOptions > h3 {
+    font-family: var(--font-roboto);
+}
+
+.sidebarOptions > h3, .sidebarOptions > img:hover {
+    cursor: pointer;
+}
+
+#folderList > img {
+    max-height: 2vh;
+    max-width: 2vh;
+    margin-left: 2.5vh;
+    margin-right: 2.5vh;
+}
+
+#folderList {
+    margin-top: 10vh;
+}
+
+#config {
+    margin-top: 55vh;
+}
+
+#projects {
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 75vw;
+    height: calc(85vh - 2px);
 }

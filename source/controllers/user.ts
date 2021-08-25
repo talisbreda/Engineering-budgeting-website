@@ -74,6 +74,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
 const login = (req: Request, res: Response, next: NextFunction) => {
     let { email, senha } = req.body;
+    let logged;
 
     let query = `SELECT * FROM usuario WHERE email = "${email}"`;
 
@@ -166,7 +167,9 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getAllProjects = async (req: Request, res: Response, next: NextFunction) => {
-    let query = `SELECT * FROM projeto`;
+    let { id_usuario } = req.body;
+
+    let query = `SELECT * FROM projeto WHERE id_usuario = ${id_usuario}`;
 
     Connect()
         .then((connection) => {
