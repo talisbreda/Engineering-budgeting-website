@@ -4,8 +4,8 @@
   "description": "",
   "main": "source/server.ts",
   "scripts": {
-    "build": "parcel build source/front/login.html",
-    "dev": "parcel source/front/login.html"
+    "build": "parcel build source/front/*.html",
+    "dev": "parcel source/front/*.html "
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "query-string": "^7.0.1",
     "rm": "^0.1.8"
   },
   "devDependencies": {

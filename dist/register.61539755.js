@@ -2691,7 +2691,8 @@ var base_url = 'http://localhost:1337';
 var form = document.querySelector('form');
 form.addEventListener('submit', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
-    var nome, email, senha, confirm, todo, response;
+    var nome, email, senha, confirm, todo, _response;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -2708,32 +2709,32 @@ form.addEventListener('submit', /*#__PURE__*/function () {
             };
 
             if (!(nome.length > 0)) {
-              _context.next = 40;
+              _context.next = 41;
               break;
             }
 
             if (!email.includes('@', '.com')) {
-              _context.next = 37;
+              _context.next = 38;
               break;
             }
 
             if (!(email.length > 6)) {
-              _context.next = 34;
+              _context.next = 35;
               break;
             }
 
             if (!(senha == confirm)) {
-              _context.next = 31;
+              _context.next = 32;
               break;
             }
 
             if (!(senha.length > 5)) {
-              _context.next = 28;
+              _context.next = 29;
               break;
             }
 
             if (!(senha.length < 19)) {
-              _context.next = 25;
+              _context.next = 26;
               break;
             }
 
@@ -2742,10 +2743,10 @@ form.addEventListener('submit', /*#__PURE__*/function () {
             return _axios.default.post("".concat(base_url, "/register"), todo);
 
           case 15:
-            response = _context.sent;
-            console.log(response.data);
-            alert('Authorization Successful');
-            _context.next = 23;
+            _response = _context.sent;
+            console.log(_response.data);
+            document.location.href = 'home';
+            _context.next = 24;
             break;
 
           case 20:
@@ -2753,49 +2754,53 @@ form.addEventListener('submit', /*#__PURE__*/function () {
             _context.t0 = _context["catch"](12);
             console.error(_context.t0);
 
-          case 23:
-            _context.next = 26;
-            break;
+            if (response.status = 400) {
+              alert('E-mail is already being used');
+            }
 
-          case 25:
-            alert('Password is too long (maximum of 18 characters');
+          case 24:
+            _context.next = 27;
+            break;
 
           case 26:
-            _context.next = 29;
-            break;
+            alert('Password is too long (maximum of 18 characters');
 
-          case 28:
-            alert('Password is too short (minimum of 6 characters)');
+          case 27:
+            _context.next = 30;
+            break;
 
           case 29:
-            _context.next = 32;
-            break;
+            alert('Password is too short (minimum of 6 characters)');
 
-          case 31:
-            alert('Passwords do not correspond');
+          case 30:
+            _context.next = 33;
+            break;
 
           case 32:
-            _context.next = 35;
-            break;
+            alert('Passwords do not correspond');
 
-          case 34:
-            alert('E-mail is not valid');
+          case 33:
+            _context.next = 36;
+            break;
 
           case 35:
-            _context.next = 38;
-            break;
-
-          case 37:
             alert('E-mail is not valid');
 
-          case 38:
-            _context.next = 41;
+          case 36:
+            _context.next = 39;
             break;
 
-          case 40:
-            alert('Name is too short');
+          case 38:
+            alert('E-mail is not valid');
+
+          case 39:
+            _context.next = 42;
+            break;
 
           case 41:
+            alert('Name is too short');
+
+          case 42:
           case "end":
             return _context.stop();
         }
@@ -2835,7 +2840,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49247" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60987" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

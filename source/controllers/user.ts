@@ -5,6 +5,7 @@ import bcryptjs from 'bcryptjs';
 import signJWT from '../functions/signJWT';
 import IUser from '../interfaces/user';
 import IProject from '../interfaces/project';
+import IPiso from '../interfaces/piso';
 import IMySQLResult from '../interfaces/result';
 import { createConnection } from 'mysql';
 import { sign } from 'jsonwebtoken';
@@ -76,6 +77,8 @@ const login = (req: Request, res: Response, next: NextFunction) => {
     let { email, senha } = req.body;
     let logged;
 
+    console.log(req.headers.cookie);
+
     let query = `SELECT * FROM usuario WHERE email = "${email}"`;
 
     Connect()
@@ -97,6 +100,7 @@ const login = (req: Request, res: Response, next: NextFunction) => {
                                                 error: _error
                                             });
                                         } else if (token) {
+                                            console.log(token);
                                             return res.status(200).json({
                                                 message: 'Auth Successful',
                                                 token,
@@ -137,7 +141,7 @@ const login = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-    let query = `SELECT id_usuario, nome, email FROM usuario`;
+    let query = `SELECT id_usuario, nome, email, senha FROM usuario`;
 
     Connect()
         .then((connection) => {
@@ -169,7 +173,39 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
 const getAllProjects = async (req: Request, res: Response, next: NextFunction) => {
     let { id_usuario } = req.body;
 
-    let query = `SELECT * FROM projeto WHERE id_usuario = ${id_usuario}`;
+    let query = `SELECT * FROM projeto WHERE usuario_fk = '${id_usuario}'`;
+
+    Connect()
+        .then((connection) => {
+            Query<IProject[]>(connection, query)
+                .then((projects) => {
+                    return res.status(200).json({
+                        projects,
+                        count: projects.length
+                    });
+                })
+                .catch((error) => {
+                    logging.error(NAMESPACE, error.message, error);
+                    return res.status(500).json({
+                        message: error.message,
+                        error
+                    });
+                });
+        })
+        .catch((error) => {
+            logging.error(NAMESPACE, error.message, error);
+
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
+const getProject = async (req: Request, res: Response, next: NextFunction) => {
+    let { id_projeto } = req.body;
+
+    let query = `SELECT * FROM projeto WHERE id_projeto = '${id_projeto}'`;
 
     Connect()
         .then((connection) => {
@@ -264,27 +300,60 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
+const createProject = async (req: Request, res: Response, next: NextFunction) => {
+    let { usuario_fk } = req.body;
+
+    let query = `INSERT INTO 
+                    projeto (usuario_fk)
+                VALUES
+                    ('${usuario_fk}')`;
+
+    Connect().then((connection) => {
+        Query<IProject>(connection, query)
+            .then((project) => {
+                return res.status(200).json({
+                    project
+                });
+            })
+            .catch((error) => {
+                logging.error(NAMESPACE, error.message, error);
+                return res.status(500).json({
+                    message: error.message,
+                    error
+                });
+            });
+    });
+};
+
 const updateProject = async (req: Request, res: Response, next: NextFunction) => {
-    let { id, usuario_fk, parede_fk, piso_fk, telhado_fk, acabamento_fk, lado_a, lado_b, lado_c, lado_d, altura } = req.body;
+    let { id, titulo_projeto, lado_a, lado_b, lado_c, lado_d, altura, material_telhado, cor_telhado,
+        ondas_telhado, material_parede, cimento, tipo_piso, tamanho_piso, argamassa, tipo_acabamento,
+        cor_tinta } = req.body;
 
     let query = `UPDATE 
                     projeto 
                 SET 
-                    usuario_fk = ${usuario_fk},
-                    parede_fk = ${parede_fk}, 
-                    piso_fk = ${piso_fk},
-                    telhado_fk = ${telhado_fk},
-                    acabamento_fk = ${acabamento_fk},
-                    lado_a = ${lado_a},
-                    lado_b = ${lado_b},
-                    lado_c = ${lado_c},
-                    lado_d = ${lado_d},
-                    altura = ${altura}
+                    titulo_projeto = '${titulo_projeto}',
+                    lado_a = '${lado_a}',
+                    lado_b = '${lado_b}',
+                    lado_c = '${lado_c}',
+                    lado_d = '${lado_d}',
+                    altura = '${altura}',
+                    material_telhado = '${material_telhado}',
+                    cor_telhado = '${cor_telhado}',
+                    ondas_telhado = '${ondas_telhado}',
+                    material_parede = '${material_parede}',
+                    cimento = '${cimento}',
+                    tipo_piso = '${tipo_piso}',
+                    tamanho_piso = '${tamanho_piso}',
+                    argamassa = '${argamassa}',
+                    tipo_acabamento = '${tipo_acabamento}',
+                    cor_tinta = '${cor_tinta}'
                 WHERE 
-                    id_projeto=${id}`;
+                    id_projeto='${id}'`;
 
     Connect().then((connection) => {
-        Query<IUser>(connection, query)
+        Query<IProject>(connection, query)
             .then((project) => {
                 return res.status(200).json({
                     project
@@ -306,8 +375,10 @@ export default {
     login,
     getAllUsers,
     getAllProjects,
+    getProject,
     deleteUser,
     deleteProject,
     updateUser,
+    createProject,
     updateProject
 };

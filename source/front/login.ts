@@ -1,39 +1,17 @@
 import 'regenerator-runtime/runtime';
 import axios from 'axios';
 
+/** General variables */
 const base_url = 'http://localhost:1337';
+var id: any = 0;
 
+/** Variables to HTML elements */
 const form: any = document.querySelector('form');
 const btLogin: any = document.querySelector('#btLogin');
 
-// async function redirectLogin() {
-//     let xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = function () {
-//         if (this.readyState == 4 && this.status == 200) {
-//             document.querySelector<any>('body').innerHTML = this.responseText;
-//         }
-//     };
-//     xhttp.open('GET', 'login.html', true);
-//     xhttp.send();
-// }
-
-// function redirectRegister() {
-//     let xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = function () {
-//         if (this.readyState == 4 && this.status == 200) {
-//             document.querySelector<any>('body').innerHTML = this.responseText;
-//         }
-//     };
-//     xhttp.open('GET', 'register.html', true);
-//     xhttp.send();
-// }
-
-var id;
-
+/** Login button / direct to home page */
 btLogin.addEventListener('click', async (event: Event) => {
     event.preventDefault();
-
-    const title = document.querySelector<any>('.inputData').value;
 
     const todo = {
         email: document.querySelector<any>('#emailInputData').value,
@@ -41,25 +19,16 @@ btLogin.addEventListener('click', async (event: Event) => {
     };
 
     try {
-        const response = await axios.post(`${base_url}/login/back`, todo);
-        console.log(response.data);
+        const response = await axios.post(`${base_url}/login`, todo);
         id = response.data.user.id_usuario;
-        document.location.href = 'register.html';
 
-        // alert(id)
+        document.cookie = `user=${response.data.user.id_usuario}`;
+
+        document.location.href = `home.html`;
     } catch (error) {
         alert('Usuário ou senha incorretos');
         console.error(error);
     }
 });
 
-// async function getContent() {
-//     try {
-//         const response = await axios.get(`${base_url}/get/all`);
-//         console.log(response.data)
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
-
-// getContent();
+export default { id };
