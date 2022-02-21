@@ -3162,38 +3162,28 @@ var custo_cimento = document.querySelector('#custo_cimento');
 var custo_argamassa = document.querySelector('#custo_argamassa');
 var custo_telha = document.querySelector('#custo_telha');
 var custo_tinta = document.querySelector('#custo_tinta');
+var input_lado_a = document.querySelector('#inputData0');
+var input_lado_b = document.querySelector('#inputData1');
+var input_lado_c = document.querySelector('#inputData2');
+var input_lado_d = document.querySelector('#inputData3');
+var input_altura = document.querySelector('#inputData4');
+var input_material_parede = document.querySelector('#inputData5');
+var input_cimento = document.querySelector('#inputData6');
+var input_tipo_piso = document.querySelector('#inputData7');
+var input_tamanho_piso = document.querySelector('#inputData8');
+var input_argamassa = document.querySelector('#inputData9');
+var input_material_telhado = document.querySelector('#inputData10');
+var input_cor_telhado = document.querySelector('#inputData11');
+var input_ondas_telhado = document.querySelector('#inputData12');
+var input_tipo_acabamento = document.querySelector('#inputData13');
+var input_cor_tinta = document.querySelector('#inputData14');
+var input_titulo_projeto = document.querySelector('#inputData15');
 
 window.onunload = function () {
   document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
+  document.cookie = 'created=;expires=' + new Date(0).toUTCString();
 };
 
-function getProjects() {
-  return __awaiter(this, void 0, void 0, function () {
-    var todoSelect, responseSelect, selectData, newProjectID;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          todoSelect = {
-            id_usuario: idUsuario
-          };
-          return [4
-          /*yield*/
-          , axios_1.default.post("".concat(base_url, "/get/projects"), todoSelect)];
-
-        case 1:
-          responseSelect = _a.sent();
-          selectData = responseSelect.data.projects;
-          newProjectID = selectData[selectData.length - 1].id_projeto;
-          document.cookie = "projectID=".concat(newProjectID);
-          return [2
-          /*return*/
-          ];
-      }
-    });
-  });
-}
-
-getProjects();
 arrow1.addEventListener('click', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -3484,7 +3474,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63324" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65437" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -38,22 +38,27 @@ var custo_argamassa: any = document.querySelector('#custo_argamassa')
 var custo_telha: any = document.querySelector('#custo_telha')
 var custo_tinta: any = document.querySelector('#custo_tinta')
 
+var input_lado_a = document.querySelector('#inputData0')
+var input_lado_b = document.querySelector('#inputData1') 
+var input_lado_c = document.querySelector('#inputData2')
+var input_lado_d = document.querySelector('#inputData3')
+var input_altura = document.querySelector('#inputData4')
+var input_material_parede = document.querySelector('#inputData5')
+var input_cimento = document.querySelector('#inputData6')
+var input_tipo_piso = document.querySelector('#inputData7')
+var input_tamanho_piso = document.querySelector('#inputData8')
+var input_argamassa = document.querySelector('#inputData9')
+var input_material_telhado = document.querySelector('#inputData10')
+var input_cor_telhado = document.querySelector('#inputData11')
+var input_ondas_telhado = document.querySelector('#inputData12')
+var input_tipo_acabamento = document.querySelector('#inputData13')
+var input_cor_tinta = document.querySelector('#inputData14')
+var input_titulo_projeto = document.querySelector('#inputData15')
+
 window.onunload = function() {
     document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
+    document.cookie = 'created=;expires=' + new Date(0).toUTCString();
 }
-
-async function getProjects() {
-    const todoSelect = {
-        id_usuario: idUsuario
-    }
-       
-    const responseSelect = await axios.post(`${base_url}/get/projects`, todoSelect);
-    const selectData = responseSelect.data.projects
-    const newProjectID = selectData[selectData.length - 1].id_projeto
-
-    document.cookie = `projectID=${newProjectID}`;
-}
-getProjects();
 
 arrow1.addEventListener('click', async (event: Event) => {
     event.preventDefault()
@@ -135,11 +140,11 @@ form.addEventListener('submit', async (event: Event) => {
         console.log(inputs[i].value)
     }
 
-    var lado_a: number = parseFloat(inputs[0].value)
-    var lado_b: number = parseFloat(inputs[1].value)
-    var lado_c: number = parseFloat(inputs[2].value)
-    var lado_d: number = parseFloat(inputs[3].value)
-    var altura: number = parseFloat(inputs[4].value)
+    var lado_a = parseFloat(inputs[0].value)
+    var lado_b = parseFloat(inputs[1].value)
+    var lado_c = parseFloat(inputs[2].value)
+    var lado_d = parseFloat(inputs[3].value)
+    var altura = parseFloat(inputs[4].value)
     var material_parede = inputs[5].value
     var cimento = inputs[6].value
     var tipo_piso = inputs[7].value

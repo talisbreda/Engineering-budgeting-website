@@ -3147,7 +3147,6 @@ var sidebarButton = document.querySelector('#sidebarButton');
 var projects = document.querySelector('.projects');
 var projectsLine = document.querySelector('.projectsLine');
 var projectPlaceholder = document.querySelectorAll('.projectPlaceholder');
-var innerProjectPlaceholder = document.querySelector('.projectPlaceholder');
 var projectName = document.querySelector('.projectName');
 var logoutButton = document.querySelector('#logout');
 var newProject = document.querySelector('#newProject');
@@ -3155,7 +3154,10 @@ var newProject = document.querySelector('#newProject');
 
 function getProjects() {
   return __awaiter(this, void 0, void 0, function () {
-    var todo, response_1, projectsFetched, count, i, k, j, l, m, error_1;
+    var todo, response_1, projectsFetched, count, _loop_1, i, error_1;
+
+    var _this = this;
+
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
@@ -3179,26 +3181,40 @@ function getProjects() {
           console.log(projectsFetched);
           count = 1;
 
-          for (i = 0; i < projectsFetched.length; i++, count++) {
+          _loop_1 = function _loop_1(i) {
             if (count == 3) {
-              k = document.createElement('div');
+              var k = document.createElement('div');
               k.className = 'projectsLine';
               projects.appendChild(k);
               projectsLine = k;
               count = 0;
             }
 
-            j = document.createElement('div');
+            var j = document.createElement('div');
             j.className = 'projectPlaceholder';
-            j.id = "projectPlaceholder".concat(i);
+            j.id = "projectPlaceholder".concat(projectsFetched[i].id_projeto);
+            j.addEventListener('click', function (event) {
+              return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                  getClickedProject(j.id);
+                  return [2
+                  /*return*/
+                  ];
+                });
+              });
+            });
             projectsLine.appendChild(j);
             console.log(j);
-            l = document.createElement('div');
+            var l = document.createElement('div');
             l.className = 'innerProjectPlaceholder';
-            m = document.querySelector("#projectPlaceholder".concat(i));
+            var m = document.querySelector("#projectPlaceholder".concat(projectsFetched[i].id_projeto));
             m.appendChild(l);
             console.log(l);
             l.innerHTML = response_1.data.projects[i].titulo_projeto;
+          };
+
+          for (i = 0; i < projectsFetched.length; i++, count++) {
+            _loop_1(i);
           }
 
           return [3
@@ -3264,7 +3280,7 @@ logoutButton.addEventListener('click', function (event) {
 
 newProject.addEventListener('click', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
-    var todoCreate, responseCreate;
+    var todoCreate, todoSelect, responseCreate, responseSelect, selectData, project_id;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
@@ -3272,12 +3288,24 @@ newProject.addEventListener('click', function (event) {
           todoCreate = {
             usuario_fk: idUsuario
           };
+          todoSelect = {
+            id_usuario: idUsuario
+          };
           return [4
           /*yield*/
           , axios_1.default.post("".concat(base_url, "/create/project"), todoCreate)];
 
         case 1:
           responseCreate = _a.sent();
+          return [4
+          /*yield*/
+          , axios_1.default.post("".concat(base_url, "/get/projects"), todoSelect)];
+
+        case 2:
+          responseSelect = _a.sent();
+          selectData = responseSelect.data.projects;
+          project_id = selectData[selectData.length - 1].id_projeto;
+          document.cookie = "projectID=".concat(project_id);
           document.location.href = 'edit.html';
           return [2
           /*return*/
@@ -3285,10 +3313,37 @@ newProject.addEventListener('click', function (event) {
       }
     });
   });
-}); // projectPlaceholder.addEventListener('click', async (event: Event) => {
-//     event.preventDefault();
-//     alert('dfghj')
-// })
+});
+/** Show project details on click */
+
+function getClickedProject(clicked_id) {
+  return __awaiter(this, void 0, void 0, function () {
+    var project_id, todo, response;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          project_id = clicked_id.split('projectPlaceholder')[1];
+          console.log(project_id);
+          todo = {
+            id_projeto: project_id
+          };
+          return [4
+          /*yield*/
+          , axios_1.default.post("".concat(base_url, "/get/project"), todo)];
+
+        case 1:
+          response = _a.sent();
+          document.cookie = "projectID=".concat(project_id);
+          document.cookie = 'created=false';
+          document.location.href = 'edit.html';
+          console.log(response.data);
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+}
 
 exports.default = {
   getProjects: getProjects
@@ -3321,7 +3376,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63324" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65437" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

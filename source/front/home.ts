@@ -19,7 +19,6 @@ const sidebarButton: any = document.querySelector('#sidebarButton');
 let projects: any = document.querySelector('.projects');
 var projectsLine: any = document.querySelector('.projectsLine');
 var projectPlaceholder: any = document.querySelectorAll('.projectPlaceholder');
-var innerProjectPlaceholder: any = document.querySelector('.projectPlaceholder');
 const projectName: any = document.querySelector('.projectName');
 const logoutButton: any = document.querySelector('#logout');
 const newProject: any = document.querySelector('#newProject')
@@ -48,13 +47,16 @@ async function getProjects() {
             }
             let j = document.createElement('div');
             j.className = 'projectPlaceholder';
-            j.id = `projectPlaceholder${i}`;
+            j.id = `projectPlaceholder${projectsFetched[i].id_projeto}`;
+            j.addEventListener('click', async (event:Event) => {
+                getClickedProject(j.id);
+            })
             projectsLine.appendChild(j);
             console.log(j);
 
             let l = document.createElement('div');
             l.className = 'innerProjectPlaceholder';
-            let m: any = document.querySelector(`#projectPlaceholder${i}`);
+            let m: any = document.querySelector(`#projectPlaceholder${projectsFetched[i].id_projeto}`);
             m.appendChild(l);
             console.log(l);
 
@@ -98,16 +100,34 @@ newProject.addEventListener('click', async (event: Event) => {
     const todoCreate = {
         usuario_fk: idUsuario
     }
+    const todoSelect = {
+        id_usuario: idUsuario
+    }
 
     const responseCreate = await axios.post(`${base_url}/create/project`, todoCreate); 
+    const responseSelect = await axios.post(`${base_url}/get/projects`, todoSelect);
+    const selectData = responseSelect.data.projects
+    const project_id = selectData[selectData.length - 1].id_projeto
+
+    document.cookie = `projectID=${project_id}`;
 
     document.location.href = 'edit.html'
 });
 
-// projectPlaceholder.addEventListener('click', async (event: Event) => {
-//     event.preventDefault();
+/** Show project details on click */
+async function getClickedProject(clicked_id: string) {
+    const project_id = clicked_id.split('projectPlaceholder')[1];
+    console.log(project_id)
 
-//     alert('dfghj')
-// })
+    const todo = {
+        id_projeto: project_id
+    }
+
+    const response = await axios.post(`${base_url}/get/project`, todo);
+    document.cookie = `projectID=${project_id}`;
+    document.cookie = 'created=false'
+    document.location.href = 'edit.html'
+    console.log(response.data)
+}
 
 export default { getProjects };
