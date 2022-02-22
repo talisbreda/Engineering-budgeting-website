@@ -3135,7 +3135,7 @@ var axios_1 = __importDefault(require("axios"));
 
 var base_url = 'http://localhost:1337'; // var idUsuario = document.cookie.split('; user=')[1]
 
-var idUsuario = document.cookie.split('=')[1]; // console.log(document.cookie)
+var idUsuario = document.cookie.split('=')[1].split(';')[0]; // console.log(document.cookie)
 
 /** Variables to HTML elements */
 
@@ -3280,7 +3280,7 @@ logoutButton.addEventListener('click', function (event) {
 
 newProject.addEventListener('click', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
-    var todoCreate, todoSelect, responseCreate, responseSelect, selectData, project_id;
+    var todoCreate, responseCreate;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
@@ -3288,24 +3288,13 @@ newProject.addEventListener('click', function (event) {
           todoCreate = {
             usuario_fk: idUsuario
           };
-          todoSelect = {
-            id_usuario: idUsuario
-          };
           return [4
           /*yield*/
           , axios_1.default.post("".concat(base_url, "/create/project"), todoCreate)];
 
         case 1:
           responseCreate = _a.sent();
-          return [4
-          /*yield*/
-          , axios_1.default.post("".concat(base_url, "/get/projects"), todoSelect)];
-
-        case 2:
-          responseSelect = _a.sent();
-          selectData = responseSelect.data.projects;
-          project_id = selectData[selectData.length - 1].id_projeto;
-          document.cookie = "projectID=".concat(project_id);
+          document.cookie = 'new=true';
           document.location.href = 'edit.html';
           return [2
           /*return*/
@@ -3333,8 +3322,8 @@ function getClickedProject(clicked_id) {
 
         case 1:
           response = _a.sent();
+          document.cookie = 'new=false';
           document.cookie = "projectID=".concat(project_id);
-          document.cookie = 'created=false';
           document.location.href = 'edit.html';
           console.log(response.data);
           return [2
@@ -3376,7 +3365,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65437" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53122" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

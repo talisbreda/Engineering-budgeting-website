@@ -6,7 +6,7 @@ import { response } from 'express';
 /** General variables */
 const base_url = 'http://localhost:1337';
 // var idUsuario = document.cookie.split('; user=')[1]
-var idUsuario = document.cookie.split('=')[1]
+var idUsuario = document.cookie.split('=')[1].split(';')[0]
 // console.log(document.cookie)
 
 
@@ -100,17 +100,9 @@ newProject.addEventListener('click', async (event: Event) => {
     const todoCreate = {
         usuario_fk: idUsuario
     }
-    const todoSelect = {
-        id_usuario: idUsuario
-    }
 
     const responseCreate = await axios.post(`${base_url}/create/project`, todoCreate); 
-    const responseSelect = await axios.post(`${base_url}/get/projects`, todoSelect);
-    const selectData = responseSelect.data.projects
-    const project_id = selectData[selectData.length - 1].id_projeto
-
-    document.cookie = `projectID=${project_id}`;
-
+    document.cookie = 'new=true'
     document.location.href = 'edit.html'
 });
 
@@ -124,8 +116,8 @@ async function getClickedProject(clicked_id: string) {
     }
 
     const response = await axios.post(`${base_url}/get/project`, todo);
+    document.cookie = 'new=false'
     document.cookie = `projectID=${project_id}`;
-    document.cookie = 'created=false'
     document.location.href = 'edit.html'
     console.log(response.data)
 }

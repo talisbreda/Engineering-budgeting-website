@@ -3177,13 +3177,43 @@ var input_cor_telhado = document.querySelector('#inputData11');
 var input_ondas_telhado = document.querySelector('#inputData12');
 var input_tipo_acabamento = document.querySelector('#inputData13');
 var input_cor_tinta = document.querySelector('#inputData14');
-var input_titulo_projeto = document.querySelector('#inputData15');
+var input_titulo_projeto = document.querySelector('#inputData15'); // window.onunload = function() {
+//     document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
+// }
 
-window.onunload = function () {
-  document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
-  document.cookie = 'created=;expires=' + new Date(0).toUTCString();
-};
+function onLoad() {
+  return __awaiter(this, void 0, void 0, function () {
+    var todoSelect, responseSelect, selectData, project_id;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          if (!document.cookie.includes('new=true')) return [3
+          /*break*/
+          , 2];
+          todoSelect = {
+            id_usuario: idUsuario
+          };
+          return [4
+          /*yield*/
+          , axios_1.default.post("".concat(base_url, "/get/projects"), todoSelect)];
 
+        case 1:
+          responseSelect = _a.sent();
+          selectData = responseSelect.data.projects;
+          project_id = selectData[selectData.length - 1].id_projeto;
+          document.cookie = "projectID=".concat(project_id);
+          _a.label = 2;
+
+        case 2:
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+}
+
+onLoad();
 arrow1.addEventListener('click', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -3312,6 +3342,7 @@ form.addEventListener('submit', function (event) {
           event.preventDefault();
           inputs = [];
           idProjeto = document.cookie.split('; projectID=')[1];
+          console.log(idProjeto);
 
           for (i = 0; i < 16; i++) {
             inputs[i] = document.querySelector("#inputData".concat(i));
@@ -3474,7 +3505,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65437" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53122" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -55,10 +55,23 @@ var input_tipo_acabamento = document.querySelector('#inputData13')
 var input_cor_tinta = document.querySelector('#inputData14')
 var input_titulo_projeto = document.querySelector('#inputData15')
 
-window.onunload = function() {
-    document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
-    document.cookie = 'created=;expires=' + new Date(0).toUTCString();
+// window.onunload = function() {
+//     document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
+// }
+
+async function onLoad() {
+    if (document.cookie.includes('new=true')) {
+        const todoSelect = {
+            id_usuario: idUsuario
+        }
+        const responseSelect = await axios.post(`${base_url}/get/projects`, todoSelect);
+        const selectData = responseSelect.data.projects
+        const project_id = selectData[selectData.length - 1].id_projeto
+
+        document.cookie = `projectID=${project_id}`;
+    }
 }
+onLoad()
 
 arrow1.addEventListener('click', async (event: Event) => {
     event.preventDefault()
@@ -134,6 +147,7 @@ form.addEventListener('submit', async (event: Event) => {
     event.preventDefault()
     var inputs:Array<any> = [];
     const idProjeto: any = document.cookie.split('; projectID=')[1]
+    console.log(idProjeto)
 
     for (var i:any = 0; i < 16; i++) {
         inputs[i] = document.querySelector(`#inputData${i}`)
