@@ -1,7 +1,5 @@
 import 'regenerator-runtime/runtime';
 import axios from 'axios';
-import { Field } from 'mysql2';
-import { response } from 'express';
 
 const base_url = 'http://localhost:1337';
 const idUsuario:any = document.cookie.split('user=')[1].split(';')[0]
@@ -22,6 +20,7 @@ var custo_cimento: any = document.querySelector('#custo_cimento')
 var custo_argamassa: any = document.querySelector('#custo_argamassa')
 var custo_telha: any = document.querySelector('#custo_telha')
 var custo_tinta: any = document.querySelector('#custo_tinta')
+var custo_total: any = document.querySelector('#custo_total')
 
 const form:any = document.querySelector('form')
 
@@ -53,9 +52,7 @@ window.onload = async function() {
 
         document.cookie = `projectID=${project_id}`;        
     } else {
-        const responseProject = await axios.post(`${base_url}/get/project`, todoProject);
-        const responseData = responseProject.data
-        input_data.forEach(fillData(responseData))
+        fillData()
     }
     
 }
@@ -69,56 +66,58 @@ window.onload = async function() {
 //     }
 // }
 
-function fillData(response: any) {
+async function fillData() {
+    const responseProject = await axios.post(`${base_url}/get/project`, todoProject);
+    const responseData = responseProject.data
     try {
         for (var i = 0; i < input_data.length; i++) {
             switch (i) {
-                case 0: input_data[0].value = response.projects[0].lado_a
+                case 0: input_data[0].value = responseData.projects[0].lado_a
                 break;
 
-                case 1: input_data[1].value = response.projects[0].lado_b
+                case 1: input_data[1].value = responseData.projects[0].lado_b
                 break;
                 
-                case 2: input_data[2].value = response.projects[0].lado_c
+                case 2: input_data[2].value = responseData.projects[0].lado_c
                 break;
                 
-                case 3: input_data[3].value = response.projects[0].lado_d
+                case 3: input_data[3].value = responseData.projects[0].lado_d
                 break;
                 
-                case 4: input_data[4].value = response.projects[0].altura
+                case 4: input_data[4].value = responseData.projects[0].altura
                 break;
                 
-                case 5: input_data[5].value = response.projects[0].material_parede
+                case 5: input_data[5].value = responseData.projects[0].material_parede
                 break;
                 
-                case 6: input_data[6].value = response.projects[0].cimento
+                case 6: input_data[6].value = responseData.projects[0].cimento
                 break;
                 
-                case 7: input_data[7].value = response.projects[0].tipo_piso
+                case 7: input_data[7].value = responseData.projects[0].tipo_piso
                 break;
                 
-                case 8: input_data[8].value = response.projects[0].tamanho_piso
+                case 8: input_data[8].value = responseData.projects[0].tamanho_piso
                 break;
                 
-                case 9: input_data[9].value = response.projects[0].argamassa
+                case 9: input_data[9].value = responseData.projects[0].argamassa
                 break;
                 
-                case 10: input_data[10].value = response.projects[0].material_telhado
+                case 10: input_data[10].value = responseData.projects[0].material_telhado
                 break;
                 
-                case 11: input_data[11].value = response.projects[0].cor_telhado
+                case 11: input_data[11].value = responseData.projects[0].cor_telhado
                 break;
                 
-                case 12: input_data[12].value = response.projects[0].ondas_telhado
+                case 12: input_data[12].value = responseData.projects[0].ondas_telhado
                 break;
                 
-                case 13: input_data[13].value = response.projects[0].tipo_acabamento
+                case 13: input_data[13].value = responseData.projects[0].tipo_acabamento
                 break;
                 
-                case 14: input_data[14].value = response.projects[0].cor_tinta
+                case 14: input_data[14].value = responseData.projects[0].cor_tinta
                 break;
                 
-                case 15: input_data[15].value = response.projects[0].titulo_projeto
+                case 15: input_data[15].value = responseData.projects[0].titulo_projeto
                 fillOutput()
                 break;
             }
@@ -157,6 +156,7 @@ async function fillOutput() {
     var tipo_acabamento = inputs[13].value
     var cor_tinta = inputs[14].value
     var titulo_projeto = inputs[15].value
+ 
 
     const todoGeral: {
         id: number,
@@ -210,6 +210,7 @@ async function fillOutput() {
         preco_metro_piso = 49.9
     }
     custo_piso.value = 'R$' + Math.round((area_piso * preco_metro_piso))
+    
     qtd_piso.value += ' Peças'
 
     /** Telhado */
@@ -291,5 +292,17 @@ async function fillOutput() {
     qtd_tinta.value = parseFloat((parede * 2) / 10 + '')
     custo_tinta.value = 'R$' + Math.round(qtd_tinta.value * 40)
     qtd_tinta.value += ' L'
+
+    /** Custo total */
+
+    var preco_total = 
+                  parseInt(custo_areia.value.split('R$')[1])
+                + parseInt(custo_cimento.value.split('R$')[1])
+                + parseInt(custo_tijolo.value.split('R$')[1])
+                + parseInt(custo_piso.value.split('R$')[1])
+                + parseInt(custo_argamassa.value.split('R$')[1])
+                + parseInt(custo_telha.value.split('R$')[1])
+                + parseInt(custo_tinta.value.split('R$')[1])
+    custo_total.value = 'R$' + preco_total
 
 }

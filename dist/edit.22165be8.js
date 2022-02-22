@@ -3148,6 +3148,7 @@ var custo_cimento = document.querySelector('#custo_cimento');
 var custo_argamassa = document.querySelector('#custo_argamassa');
 var custo_telha = document.querySelector('#custo_telha');
 var custo_tinta = document.querySelector('#custo_tinta');
+var custo_total = document.querySelector('#custo_total');
 var form = document.querySelector('form');
 var todoUser = {
   id_usuario: idUsuario
@@ -3167,7 +3168,7 @@ var input_data = document.querySelectorAll('.inputData'); // for (var i = 0; i <
 
 window.onload = function () {
   return __awaiter(this, void 0, void 0, function () {
-    var responseSelect, selectData, project_id, responseProject, responseData;
+    var responseSelect, selectData, project_id;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
@@ -3185,20 +3186,13 @@ window.onload = function () {
           document.cookie = "projectID=".concat(project_id);
           return [3
           /*break*/
-          , 4];
+          , 3];
 
         case 2:
-          return [4
-          /*yield*/
-          , axios_1.default.post("".concat(base_url, "/get/project"), todoProject)];
+          fillData();
+          _a.label = 3;
 
         case 3:
-          responseProject = _a.sent();
-          responseData = responseProject.data;
-          input_data.forEach(fillData(responseData));
-          _a.label = 4;
-
-        case 4:
           return [2
           /*return*/
           ];
@@ -3215,80 +3209,100 @@ window.onload = function () {
 // }
 
 
-function fillData(response) {
-  try {
-    for (var i = 0; i < input_data.length; i++) {
-      switch (i) {
+function fillData() {
+  return __awaiter(this, void 0, void 0, function () {
+    var responseProject, responseData, i;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
         case 0:
-          input_data[0].value = response.projects[0].lado_a;
-          break;
+          return [4
+          /*yield*/
+          , axios_1.default.post("".concat(base_url, "/get/project"), todoProject)];
 
         case 1:
-          input_data[1].value = response.projects[0].lado_b;
-          break;
+          responseProject = _a.sent();
+          responseData = responseProject.data;
 
-        case 2:
-          input_data[2].value = response.projects[0].lado_c;
-          break;
+          try {
+            for (i = 0; i < input_data.length; i++) {
+              switch (i) {
+                case 0:
+                  input_data[0].value = responseData.projects[0].lado_a;
+                  break;
 
-        case 3:
-          input_data[3].value = response.projects[0].lado_d;
-          break;
+                case 1:
+                  input_data[1].value = responseData.projects[0].lado_b;
+                  break;
 
-        case 4:
-          input_data[4].value = response.projects[0].altura;
-          break;
+                case 2:
+                  input_data[2].value = responseData.projects[0].lado_c;
+                  break;
 
-        case 5:
-          input_data[5].value = response.projects[0].material_parede;
-          break;
+                case 3:
+                  input_data[3].value = responseData.projects[0].lado_d;
+                  break;
 
-        case 6:
-          input_data[6].value = response.projects[0].cimento;
-          break;
+                case 4:
+                  input_data[4].value = responseData.projects[0].altura;
+                  break;
 
-        case 7:
-          input_data[7].value = response.projects[0].tipo_piso;
-          break;
+                case 5:
+                  input_data[5].value = responseData.projects[0].material_parede;
+                  break;
 
-        case 8:
-          input_data[8].value = response.projects[0].tamanho_piso;
-          break;
+                case 6:
+                  input_data[6].value = responseData.projects[0].cimento;
+                  break;
 
-        case 9:
-          input_data[9].value = response.projects[0].argamassa;
-          break;
+                case 7:
+                  input_data[7].value = responseData.projects[0].tipo_piso;
+                  break;
 
-        case 10:
-          input_data[10].value = response.projects[0].material_telhado;
-          break;
+                case 8:
+                  input_data[8].value = responseData.projects[0].tamanho_piso;
+                  break;
 
-        case 11:
-          input_data[11].value = response.projects[0].cor_telhado;
-          break;
+                case 9:
+                  input_data[9].value = responseData.projects[0].argamassa;
+                  break;
 
-        case 12:
-          input_data[12].value = response.projects[0].ondas_telhado;
-          break;
+                case 10:
+                  input_data[10].value = responseData.projects[0].material_telhado;
+                  break;
 
-        case 13:
-          input_data[13].value = response.projects[0].tipo_acabamento;
-          break;
+                case 11:
+                  input_data[11].value = responseData.projects[0].cor_telhado;
+                  break;
 
-        case 14:
-          input_data[14].value = response.projects[0].cor_tinta;
-          break;
+                case 12:
+                  input_data[12].value = responseData.projects[0].ondas_telhado;
+                  break;
 
-        case 15:
-          input_data[15].value = response.projects[0].titulo_projeto;
-          fillOutput();
-          break;
+                case 13:
+                  input_data[13].value = responseData.projects[0].tipo_acabamento;
+                  break;
+
+                case 14:
+                  input_data[14].value = responseData.projects[0].cor_tinta;
+                  break;
+
+                case 15:
+                  input_data[15].value = responseData.projects[0].titulo_projeto;
+                  fillOutput();
+                  break;
+              }
+            }
+          } catch (e) {
+            console.log(e);
+            alert('Failed loading project data');
+          }
+
+          return [2
+          /*return*/
+          ];
       }
-    }
-  } catch (e) {
-    console.log(e);
-    alert('Failed loading project data');
-  }
+    });
+  });
 }
 
 form.addEventListener('submit', function (event) {
@@ -3305,7 +3319,7 @@ form.addEventListener('submit', function (event) {
 
 function fillOutput() {
   return __awaiter(this, void 0, void 0, function () {
-    var inputs, i, lado_a, lado_b, lado_c, lado_d, altura, material_parede, cimento, tipo_piso, tamanho_piso, argamassa, material_telhado, cor_telhado, ondas_telhado, tipo_acabamento, cor_tinta, titulo_projeto, todoGeral, responseGeral, area_piso, preco_metro_piso, tamanho1, tamanho2, preco_telha, area_telhado, parede, largura, altura_bloco, comprimento, area_tijolo, argamassa_piso;
+    var inputs, i, lado_a, lado_b, lado_c, lado_d, altura, material_parede, cimento, tipo_piso, tamanho_piso, argamassa, material_telhado, cor_telhado, ondas_telhado, tipo_acabamento, cor_tinta, titulo_projeto, todoGeral, responseGeral, area_piso, preco_metro_piso, tamanho1, tamanho2, preco_telha, area_telhado, parede, largura, altura_bloco, comprimento, area_tijolo, argamassa_piso, preco_total;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
@@ -3432,6 +3446,8 @@ function fillOutput() {
           qtd_tinta.value = parseFloat(parede * 2 / 10 + '');
           custo_tinta.value = 'R$' + Math.round(qtd_tinta.value * 40);
           qtd_tinta.value += ' L';
+          preco_total = parseInt(custo_areia.value.split('R$')[1]) + parseInt(custo_cimento.value.split('R$')[1]) + parseInt(custo_tijolo.value.split('R$')[1]) + parseInt(custo_piso.value.split('R$')[1]) + parseInt(custo_argamassa.value.split('R$')[1]) + parseInt(custo_telha.value.split('R$')[1]) + parseInt(custo_tinta.value.split('R$')[1]);
+          custo_total.value = 'R$' + preco_total;
           return [2
           /*return*/
           ];
