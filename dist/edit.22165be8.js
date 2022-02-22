@@ -3132,7 +3132,8 @@ require("regenerator-runtime/runtime");
 var axios_1 = __importDefault(require("axios"));
 
 var base_url = 'http://localhost:1337';
-var idUsuario = document.cookie.split('; projectID=')[0].split('=')[1];
+var idUsuario = document.cookie.split('user=')[1].split(';')[0];
+var idProjeto = document.cookie.split('projectID=')[1].split(';')[0];
 var arrow1 = document.querySelector('#arrow1');
 var arrow2 = document.querySelector('#arrow2');
 var arrow3 = document.querySelector('#arrow3');
@@ -3148,6 +3149,12 @@ var input5 = document.querySelector('#input5');
 var input6 = document.querySelector('#input6');
 var input7 = document.querySelector('#input7');
 var form = document.querySelector('form');
+var todoUser = {
+  id_usuario: idUsuario
+};
+var todoProject = {
+  id_projeto: idProjeto
+};
 var qtd_areia = document.querySelector('#qtd_areia');
 var qtd_cimento = document.querySelector('#qtd_cimento');
 var qtd_tijolo = document.querySelector('#qtd_tijolo');
@@ -3162,49 +3169,42 @@ var custo_cimento = document.querySelector('#custo_cimento');
 var custo_argamassa = document.querySelector('#custo_argamassa');
 var custo_telha = document.querySelector('#custo_telha');
 var custo_tinta = document.querySelector('#custo_tinta');
-var input_lado_a = document.querySelector('#inputData0');
-var input_lado_b = document.querySelector('#inputData1');
-var input_lado_c = document.querySelector('#inputData2');
-var input_lado_d = document.querySelector('#inputData3');
-var input_altura = document.querySelector('#inputData4');
-var input_material_parede = document.querySelector('#inputData5');
-var input_cimento = document.querySelector('#inputData6');
-var input_tipo_piso = document.querySelector('#inputData7');
-var input_tamanho_piso = document.querySelector('#inputData8');
-var input_argamassa = document.querySelector('#inputData9');
-var input_material_telhado = document.querySelector('#inputData10');
-var input_cor_telhado = document.querySelector('#inputData11');
-var input_ondas_telhado = document.querySelector('#inputData12');
-var input_tipo_acabamento = document.querySelector('#inputData13');
-var input_cor_tinta = document.querySelector('#inputData14');
-var input_titulo_projeto = document.querySelector('#inputData15'); // window.onunload = function() {
-//     document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
-// }
+var input_data = document.querySelectorAll('.inputData');
 
 function onLoad() {
   return __awaiter(this, void 0, void 0, function () {
-    var todoSelect, responseSelect, selectData, project_id;
+    var responseSelect, selectData, project_id, responseProject;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
           if (!document.cookie.includes('new=true')) return [3
           /*break*/
           , 2];
-          todoSelect = {
-            id_usuario: idUsuario
-          };
           return [4
           /*yield*/
-          , axios_1.default.post("".concat(base_url, "/get/projects"), todoSelect)];
+          , axios_1.default.post("".concat(base_url, "/get/projects"), todoUser)];
 
         case 1:
           responseSelect = _a.sent();
           selectData = responseSelect.data.projects;
           project_id = selectData[selectData.length - 1].id_projeto;
           document.cookie = "projectID=".concat(project_id);
-          _a.label = 2;
+          return [3
+          /*break*/
+          , 4];
 
         case 2:
+          return [4
+          /*yield*/
+          , axios_1.default.post("".concat(base_url, "/get/project"), todoProject)];
+
+        case 3:
+          responseProject = _a.sent();
+          input_data.forEach(fillData(responseProject));
+          console.log(responseProject.config);
+          _a.label = 4;
+
+        case 4:
           return [2
           /*return*/
           ];
@@ -3214,6 +3214,92 @@ function onLoad() {
 }
 
 onLoad();
+
+function fillData(response) {
+  return __awaiter(this, void 0, void 0, function () {
+    var i;
+    return __generator(this, function (_a) {
+      try {
+        for (i = 0; i < input_data.length; i++) {
+          switch (i) {
+            case 0:
+              input_data[0].value = response.data.projects[0].lado_a;
+              break;
+
+            case 1:
+              input_data[1].value = response.data.projects[0].lado_b;
+              break;
+
+            case 2:
+              input_data[2].value = response.data.projects[0].lado_c;
+              break;
+
+            case 3:
+              input_data[3].value = response.data.projects[0].lado_d;
+              break;
+
+            case 4:
+              input_data[4].value = response.data.projects[0].altura;
+              break;
+
+            case 5:
+              input_data[5].value = response.data.projects[0].material_parede;
+              break;
+
+            case 6:
+              input_data[6].value = response.data.projects[0].cimento;
+              break;
+
+            case 7:
+              input_data[7].value = response.data.projects[0].tipo_piso;
+              break;
+
+            case 8:
+              input_data[8].value = response.data.projects[0].tamanho_piso;
+              break;
+
+            case 9:
+              input_data[9].value = response.data.projects[0].argamassa;
+              break;
+
+            case 10:
+              input_data[10].value = response.data.projects[0].material_telhado;
+              break;
+
+            case 11:
+              input_data[11].value = response.data.projects[0].cor_telhado;
+              break;
+
+            case 12:
+              input_data[12].value = response.data.projects[0].ondas_telhado;
+              break;
+
+            case 13:
+              input_data[13].value = response.data.projects[0].tipo_acabamento;
+              break;
+
+            case 14:
+              input_data[14].value = response.data.projects[0].cor_tinta;
+              break;
+
+            case 15:
+              input_data[15].value = response.data.projects[0].titulo_projeto;
+              fillOutput();
+              break;
+          }
+        }
+      } catch (e) {
+        console.log(e);
+        alert('Failed loading project data');
+      }
+
+      return [2
+      /*return*/
+      ];
+    });
+  });
+}
+
 arrow1.addEventListener('click', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -3335,13 +3421,23 @@ arrow7.addEventListener('click', function (event) {
 });
 form.addEventListener('submit', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
-    var inputs, idProjeto, i, lado_a, lado_b, lado_c, lado_d, altura, material_parede, cimento, tipo_piso, tamanho_piso, argamassa, material_telhado, cor_telhado, ondas_telhado, tipo_acabamento, cor_tinta, titulo_projeto, todoGeral, responseGeral, area_piso, preco_metro_piso, tamanho1, tamanho2, preco_telha, area_telhado, parede, largura, altura_bloco, comprimento, area_tijolo, argamassa_piso;
+    return __generator(this, function (_a) {
+      event.preventDefault;
+      fillOutput();
+      return [2
+      /*return*/
+      ];
+    });
+  });
+});
+
+function fillOutput() {
+  return __awaiter(this, void 0, void 0, function () {
+    var inputs, i, lado_a, lado_b, lado_c, lado_d, altura, material_parede, cimento, tipo_piso, tamanho_piso, argamassa, material_telhado, cor_telhado, ondas_telhado, tipo_acabamento, cor_tinta, titulo_projeto, todoGeral, responseGeral, area_piso, preco_metro_piso, tamanho1, tamanho2, preco_telha, area_telhado, parede, largura, altura_bloco, comprimento, area_tijolo, argamassa_piso;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
-          event.preventDefault();
           inputs = [];
-          idProjeto = document.cookie.split('; projectID=')[1];
           console.log(idProjeto);
 
           for (i = 0; i < 16; i++) {
@@ -3476,7 +3572,7 @@ form.addEventListener('submit', function (event) {
       }
     });
   });
-});
+}
 },{"regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","axios":"../../node_modules/axios/index.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3505,7 +3601,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53122" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65531" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

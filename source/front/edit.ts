@@ -4,7 +4,8 @@ import { Field } from 'mysql2';
 import { response } from 'express';
 
 const base_url = 'http://localhost:1337';
-const idUsuario:any = document.cookie.split('; projectID=')[0].split('=')[1]
+const idUsuario:any = document.cookie.split('user=')[1].split(';')[0]
+const idProjeto:any = document.cookie.split('projectID=')[1].split(';')[0]
 
 const arrow1:any = document.querySelector('#arrow1')
 const arrow2:any = document.querySelector('#arrow2')
@@ -22,6 +23,14 @@ const input6:any = document.querySelector('#input6')
 const input7:any = document.querySelector('#input7')
 const form:any = document.querySelector('form')
 
+const todoUser = {
+    id_usuario: idUsuario
+}
+
+const todoProject = {
+    id_projeto: idProjeto
+}
+
 var qtd_areia: any = document.querySelector('#qtd_areia')
 var qtd_cimento: any = document.querySelector('#qtd_cimento')
 var qtd_tijolo: any = document.querySelector('#qtd_tijolo')
@@ -38,40 +47,83 @@ var custo_argamassa: any = document.querySelector('#custo_argamassa')
 var custo_telha: any = document.querySelector('#custo_telha')
 var custo_tinta: any = document.querySelector('#custo_tinta')
 
-var input_lado_a = document.querySelector('#inputData0')
-var input_lado_b = document.querySelector('#inputData1') 
-var input_lado_c = document.querySelector('#inputData2')
-var input_lado_d = document.querySelector('#inputData3')
-var input_altura = document.querySelector('#inputData4')
-var input_material_parede = document.querySelector('#inputData5')
-var input_cimento = document.querySelector('#inputData6')
-var input_tipo_piso = document.querySelector('#inputData7')
-var input_tamanho_piso = document.querySelector('#inputData8')
-var input_argamassa = document.querySelector('#inputData9')
-var input_material_telhado = document.querySelector('#inputData10')
-var input_cor_telhado = document.querySelector('#inputData11')
-var input_ondas_telhado = document.querySelector('#inputData12')
-var input_tipo_acabamento = document.querySelector('#inputData13')
-var input_cor_tinta = document.querySelector('#inputData14')
-var input_titulo_projeto = document.querySelector('#inputData15')
-
-// window.onunload = function() {
-//     document.cookie = 'projectID=;expires=' + new Date(0).toUTCString();
-// }
+var input_data: any = document.querySelectorAll('.inputData')
 
 async function onLoad() {
     if (document.cookie.includes('new=true')) {
-        const todoSelect = {
-            id_usuario: idUsuario
-        }
-        const responseSelect = await axios.post(`${base_url}/get/projects`, todoSelect);
+        const responseSelect = await axios.post(`${base_url}/get/projects`, todoUser);
         const selectData = responseSelect.data.projects
         const project_id = selectData[selectData.length - 1].id_projeto
 
-        document.cookie = `projectID=${project_id}`;
+        document.cookie = `projectID=${project_id}`;        
+    } else {
+        const responseProject = await axios.post(`${base_url}/get/project`, todoProject);
+        input_data.forEach(fillData(responseProject))
+        console.log(responseProject.config)
     }
+    
 }
 onLoad()
+
+async function fillData(response: any) {
+    try {
+        for (var i = 0; i < input_data.length; i++) {
+            switch (i) {
+                case 0: input_data[0].value = response.data.projects[0].lado_a
+                break;
+
+                case 1: input_data[1].value = response.data.projects[0].lado_b
+                break;
+                
+                case 2: input_data[2].value = response.data.projects[0].lado_c
+                break;
+                
+                case 3: input_data[3].value = response.data.projects[0].lado_d
+                break;
+                
+                case 4: input_data[4].value = response.data.projects[0].altura
+                break;
+                
+                case 5: input_data[5].value = response.data.projects[0].material_parede
+                break;
+                
+                case 6: input_data[6].value = response.data.projects[0].cimento
+                break;
+                
+                case 7: input_data[7].value = response.data.projects[0].tipo_piso
+                break;
+                
+                case 8: input_data[8].value = response.data.projects[0].tamanho_piso
+                break;
+                
+                case 9: input_data[9].value = response.data.projects[0].argamassa
+                break;
+                
+                case 10: input_data[10].value = response.data.projects[0].material_telhado
+                break;
+                
+                case 11: input_data[11].value = response.data.projects[0].cor_telhado
+                break;
+                
+                case 12: input_data[12].value = response.data.projects[0].ondas_telhado
+                break;
+                
+                case 13: input_data[13].value = response.data.projects[0].tipo_acabamento
+                break;
+                
+                case 14: input_data[14].value = response.data.projects[0].cor_tinta
+                break;
+                
+                case 15: input_data[15].value = response.data.projects[0].titulo_projeto
+                fillOutput()
+                break;
+            }
+}
+    } catch (e) {
+        console.log(e)
+        alert('Failed loading project data')
+    }
+}   
 
 arrow1.addEventListener('click', async (event: Event) => {
     event.preventDefault()
@@ -144,9 +196,12 @@ arrow7.addEventListener('click', async (event: Event) => {
 })
 
 form.addEventListener('submit', async (event: Event) => {
-    event.preventDefault()
+    event.preventDefault
+    fillOutput()
+})
+
+async function fillOutput() {
     var inputs:Array<any> = [];
-    const idProjeto: any = document.cookie.split('; projectID=')[1]
     console.log(idProjeto)
 
     for (var i:any = 0; i < 16; i++) {
@@ -309,4 +364,4 @@ form.addEventListener('submit', async (event: Event) => {
     custo_tinta.value = 'R$' + Math.round(qtd_tinta.value * 40)
     qtd_tinta.value += ' L'
 
-})
+}
