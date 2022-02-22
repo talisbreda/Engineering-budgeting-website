@@ -3134,27 +3134,6 @@ var axios_1 = __importDefault(require("axios"));
 var base_url = 'http://localhost:1337';
 var idUsuario = document.cookie.split('user=')[1].split(';')[0];
 var idProjeto = document.cookie.split('projectID=')[1].split(';')[0];
-var arrow1 = document.querySelector('#arrow1');
-var arrow2 = document.querySelector('#arrow2');
-var arrow3 = document.querySelector('#arrow3');
-var arrow4 = document.querySelector('#arrow4');
-var arrow5 = document.querySelector('#arrow5');
-var arrow6 = document.querySelector('#arrow6');
-var arrow7 = document.querySelector('#arrow5');
-var input1 = document.querySelector('#input1');
-var input2 = document.querySelector('#input2');
-var input3 = document.querySelector('#input3');
-var input4 = document.querySelector('#input4');
-var input5 = document.querySelector('#input5');
-var input6 = document.querySelector('#input6');
-var input7 = document.querySelector('#input7');
-var form = document.querySelector('form');
-var todoUser = {
-  id_usuario: idUsuario
-};
-var todoProject = {
-  id_projeto: idProjeto
-};
 var qtd_areia = document.querySelector('#qtd_areia');
 var qtd_cimento = document.querySelector('#qtd_cimento');
 var qtd_tijolo = document.querySelector('#qtd_tijolo');
@@ -3169,11 +3148,26 @@ var custo_cimento = document.querySelector('#custo_cimento');
 var custo_argamassa = document.querySelector('#custo_argamassa');
 var custo_telha = document.querySelector('#custo_telha');
 var custo_tinta = document.querySelector('#custo_tinta');
-var input_data = document.querySelectorAll('.inputData');
+var form = document.querySelector('form');
+var todoUser = {
+  id_usuario: idUsuario
+};
+var todoProject = {
+  id_projeto: idProjeto
+};
+var arrows = [];
+var input_data = document.querySelectorAll('.inputData'); // for (var i = 0; i < 7; i++) {
+//     arrows[i] = document.querySelector(`#arrow${i}`)
+//     if (arrows[i]) {
+//         arrows[i].addEventListener('click', async (event:Event) => {
+//             expandCollapse(arrows[i])
+//         })
+//     }
+// }
 
-function onLoad() {
+window.onload = function () {
   return __awaiter(this, void 0, void 0, function () {
-    var responseSelect, selectData, project_id, responseProject;
+    var responseSelect, selectData, project_id, responseProject, responseData;
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
@@ -3200,8 +3194,8 @@ function onLoad() {
 
         case 3:
           responseProject = _a.sent();
-          input_data.forEach(fillData(responseProject));
-          console.log(responseProject.config);
+          responseData = responseProject.data;
+          input_data.forEach(fillData(responseData));
           _a.label = 4;
 
         case 4:
@@ -3211,214 +3205,92 @@ function onLoad() {
       }
     });
   });
-}
+}; // function expandCollapse(element: any) {
+//     const row: any = document.querySelector(`#input${element.id}`)
+//     if (row.style.display == 'none') {
+//         row.style.display = 'block';
+//     } else {
+//         row.style.display = 'none';
+//     }
+// }
 
-onLoad();
 
 function fillData(response) {
-  return __awaiter(this, void 0, void 0, function () {
-    var i;
-    return __generator(this, function (_a) {
-      try {
-        for (i = 0; i < input_data.length; i++) {
-          switch (i) {
-            case 0:
-              input_data[0].value = response.data.projects[0].lado_a;
-              break;
+  try {
+    for (var i = 0; i < input_data.length; i++) {
+      switch (i) {
+        case 0:
+          input_data[0].value = response.projects[0].lado_a;
+          break;
 
-            case 1:
-              input_data[1].value = response.data.projects[0].lado_b;
-              break;
+        case 1:
+          input_data[1].value = response.projects[0].lado_b;
+          break;
 
-            case 2:
-              input_data[2].value = response.data.projects[0].lado_c;
-              break;
+        case 2:
+          input_data[2].value = response.projects[0].lado_c;
+          break;
 
-            case 3:
-              input_data[3].value = response.data.projects[0].lado_d;
-              break;
+        case 3:
+          input_data[3].value = response.projects[0].lado_d;
+          break;
 
-            case 4:
-              input_data[4].value = response.data.projects[0].altura;
-              break;
+        case 4:
+          input_data[4].value = response.projects[0].altura;
+          break;
 
-            case 5:
-              input_data[5].value = response.data.projects[0].material_parede;
-              break;
+        case 5:
+          input_data[5].value = response.projects[0].material_parede;
+          break;
 
-            case 6:
-              input_data[6].value = response.data.projects[0].cimento;
-              break;
+        case 6:
+          input_data[6].value = response.projects[0].cimento;
+          break;
 
-            case 7:
-              input_data[7].value = response.data.projects[0].tipo_piso;
-              break;
+        case 7:
+          input_data[7].value = response.projects[0].tipo_piso;
+          break;
 
-            case 8:
-              input_data[8].value = response.data.projects[0].tamanho_piso;
-              break;
+        case 8:
+          input_data[8].value = response.projects[0].tamanho_piso;
+          break;
 
-            case 9:
-              input_data[9].value = response.data.projects[0].argamassa;
-              break;
+        case 9:
+          input_data[9].value = response.projects[0].argamassa;
+          break;
 
-            case 10:
-              input_data[10].value = response.data.projects[0].material_telhado;
-              break;
+        case 10:
+          input_data[10].value = response.projects[0].material_telhado;
+          break;
 
-            case 11:
-              input_data[11].value = response.data.projects[0].cor_telhado;
-              break;
+        case 11:
+          input_data[11].value = response.projects[0].cor_telhado;
+          break;
 
-            case 12:
-              input_data[12].value = response.data.projects[0].ondas_telhado;
-              break;
+        case 12:
+          input_data[12].value = response.projects[0].ondas_telhado;
+          break;
 
-            case 13:
-              input_data[13].value = response.data.projects[0].tipo_acabamento;
-              break;
+        case 13:
+          input_data[13].value = response.projects[0].tipo_acabamento;
+          break;
 
-            case 14:
-              input_data[14].value = response.data.projects[0].cor_tinta;
-              break;
+        case 14:
+          input_data[14].value = response.projects[0].cor_tinta;
+          break;
 
-            case 15:
-              input_data[15].value = response.data.projects[0].titulo_projeto;
-              fillOutput();
-              break;
-          }
-        }
-      } catch (e) {
-        console.log(e);
-        alert('Failed loading project data');
+        case 15:
+          input_data[15].value = response.projects[0].titulo_projeto;
+          fillOutput();
+          break;
       }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
+    }
+  } catch (e) {
+    console.log(e);
+    alert('Failed loading project data');
+  }
 }
 
-arrow1.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input1.style.display == 'none') {
-        input1.style.display = 'block';
-      } else {
-        input1.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
-arrow2.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input2.style.display == 'none') {
-        input2.style.display = 'block';
-      } else {
-        input2.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
-arrow3.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input3.style.display == 'none') {
-        input3.style.display = 'block';
-      } else {
-        input3.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
-arrow4.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input4.style.display == 'none') {
-        input4.style.display = 'block';
-      } else {
-        input4.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
-arrow5.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input5.style.display == 'none') {
-        input5.style.display = 'block';
-      } else {
-        input5.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
-arrow6.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input6.style.display == 'none') {
-        input6.style.display = 'block';
-      } else {
-        input6.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
-arrow7.addEventListener('click', function (event) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-      event.preventDefault();
-
-      if (input7.style.display == 'none') {
-        input7.style.display = 'block';
-      } else {
-        input7.style.display = 'none';
-      }
-
-      return [2
-      /*return*/
-      ];
-    });
-  });
-});
 form.addEventListener('submit', function (event) {
   return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -3438,11 +3310,9 @@ function fillOutput() {
       switch (_a.label) {
         case 0:
           inputs = [];
-          console.log(idProjeto);
 
           for (i = 0; i < 16; i++) {
             inputs[i] = document.querySelector("#inputData".concat(i));
-            console.log(inputs[i].value);
           }
 
           lado_a = parseFloat(inputs[0].value);
@@ -3505,11 +3375,9 @@ function fillOutput() {
           if (ondas_telhado == 1) {
             tamanho2 = 0.27;
             preco_telha = 3.3;
-            console.log('a');
           } else if (ondas_telhado == 2) {
             tamanho2 = 0.37;
             preco_telha = 4.9;
-            console.log('b');
           }
 
           area_telhado = area_piso * (lado_a / 2 * 0.25) / 2;
@@ -3517,7 +3385,6 @@ function fillOutput() {
           custo_telha.value = 'R$' + Math.round(qtd_telha.value * preco_telha);
           qtd_telha.value += ' Telhas';
           parede = (lado_a + lado_b + lado_c + lado_d) * altura;
-          console.log(lado_a, lado_b, lado_c, lado_d, altura, parede);
           largura = 0;
           altura_bloco = 0;
           comprimento = 0;
@@ -3532,8 +3399,7 @@ function fillOutput() {
             comprimento = 19;
           }
 
-          console.log(largura);
-          qtd_areia.value = parseFloat(parede * 0.02 * largura * (altura * 100 / (altura_bloco + 2)) + '');
+          qtd_areia.value = parseFloat(parede * 0.02 * largura * (altura * 100 / (altura_bloco + 2)) + '').toFixed(2);
           qtd_cimento.value = parseFloat(Math.round(parede * 5) / 40 + '');
           custo_areia.value = 'R$' + Math.round(qtd_areia.value * 120);
           custo_cimento.value = 'R$' + Math.round(qtd_cimento.value * 22);
@@ -3544,7 +3410,7 @@ function fillOutput() {
           if (material_parede == 'Bloco') {
             area_tijolo = 0.39 * 0.19;
           } else if (material_parede == 'Tijolo') {
-            area_tijolo = 0.19 * 0, 19;
+            area_tijolo = 0.19 * 0.19;
           }
 
           qtd_tijolo.value = parseFloat(Math.round(parede / area_tijolo) + '');
@@ -3601,7 +3467,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65531" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62397" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

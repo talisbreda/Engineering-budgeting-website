@@ -7,30 +7,6 @@ const base_url = 'http://localhost:1337';
 const idUsuario:any = document.cookie.split('user=')[1].split(';')[0]
 const idProjeto:any = document.cookie.split('projectID=')[1].split(';')[0]
 
-const arrow1:any = document.querySelector('#arrow1')
-const arrow2:any = document.querySelector('#arrow2')
-const arrow3:any = document.querySelector('#arrow3')
-const arrow4:any = document.querySelector('#arrow4')
-const arrow5:any = document.querySelector('#arrow5')
-const arrow6:any = document.querySelector('#arrow6')
-const arrow7:any = document.querySelector('#arrow5')
-const input1:any = document.querySelector('#input1')
-const input2:any = document.querySelector('#input2')
-const input3:any = document.querySelector('#input3')
-const input4:any = document.querySelector('#input4')
-const input5:any = document.querySelector('#input5')
-const input6:any = document.querySelector('#input6')
-const input7:any = document.querySelector('#input7')
-const form:any = document.querySelector('form')
-
-const todoUser = {
-    id_usuario: idUsuario
-}
-
-const todoProject = {
-    id_projeto: idProjeto
-}
-
 var qtd_areia: any = document.querySelector('#qtd_areia')
 var qtd_cimento: any = document.querySelector('#qtd_cimento')
 var qtd_tijolo: any = document.querySelector('#qtd_tijolo')
@@ -47,9 +23,29 @@ var custo_argamassa: any = document.querySelector('#custo_argamassa')
 var custo_telha: any = document.querySelector('#custo_telha')
 var custo_tinta: any = document.querySelector('#custo_tinta')
 
+const form:any = document.querySelector('form')
+
+const todoUser = {
+    id_usuario: idUsuario
+}
+
+const todoProject = {
+    id_projeto: idProjeto
+}
+
+var arrows:Array<any> = [];
 var input_data: any = document.querySelectorAll('.inputData')
 
-async function onLoad() {
+// for (var i = 0; i < 7; i++) {
+//     arrows[i] = document.querySelector(`#arrow${i}`)
+//     if (arrows[i]) {
+//         arrows[i].addEventListener('click', async (event:Event) => {
+//             expandCollapse(arrows[i])
+//         })
+//     }
+// }
+
+window.onload = async function() {
     if (document.cookie.includes('new=true')) {
         const responseSelect = await axios.post(`${base_url}/get/projects`, todoUser);
         const selectData = responseSelect.data.projects
@@ -58,63 +54,71 @@ async function onLoad() {
         document.cookie = `projectID=${project_id}`;        
     } else {
         const responseProject = await axios.post(`${base_url}/get/project`, todoProject);
-        input_data.forEach(fillData(responseProject))
-        console.log(responseProject.config)
+        const responseData = responseProject.data
+        input_data.forEach(fillData(responseData))
     }
     
 }
-onLoad()
 
-async function fillData(response: any) {
+// function expandCollapse(element: any) {
+//     const row: any = document.querySelector(`#input${element.id}`)
+//     if (row.style.display == 'none') {
+//         row.style.display = 'block';
+//     } else {
+//         row.style.display = 'none';
+//     }
+// }
+
+function fillData(response: any) {
     try {
         for (var i = 0; i < input_data.length; i++) {
             switch (i) {
-                case 0: input_data[0].value = response.data.projects[0].lado_a
+                case 0: input_data[0].value = response.projects[0].lado_a
                 break;
 
-                case 1: input_data[1].value = response.data.projects[0].lado_b
+                case 1: input_data[1].value = response.projects[0].lado_b
                 break;
                 
-                case 2: input_data[2].value = response.data.projects[0].lado_c
+                case 2: input_data[2].value = response.projects[0].lado_c
                 break;
                 
-                case 3: input_data[3].value = response.data.projects[0].lado_d
+                case 3: input_data[3].value = response.projects[0].lado_d
                 break;
                 
-                case 4: input_data[4].value = response.data.projects[0].altura
+                case 4: input_data[4].value = response.projects[0].altura
                 break;
                 
-                case 5: input_data[5].value = response.data.projects[0].material_parede
+                case 5: input_data[5].value = response.projects[0].material_parede
                 break;
                 
-                case 6: input_data[6].value = response.data.projects[0].cimento
+                case 6: input_data[6].value = response.projects[0].cimento
                 break;
                 
-                case 7: input_data[7].value = response.data.projects[0].tipo_piso
+                case 7: input_data[7].value = response.projects[0].tipo_piso
                 break;
                 
-                case 8: input_data[8].value = response.data.projects[0].tamanho_piso
+                case 8: input_data[8].value = response.projects[0].tamanho_piso
                 break;
                 
-                case 9: input_data[9].value = response.data.projects[0].argamassa
+                case 9: input_data[9].value = response.projects[0].argamassa
                 break;
                 
-                case 10: input_data[10].value = response.data.projects[0].material_telhado
+                case 10: input_data[10].value = response.projects[0].material_telhado
                 break;
                 
-                case 11: input_data[11].value = response.data.projects[0].cor_telhado
+                case 11: input_data[11].value = response.projects[0].cor_telhado
                 break;
                 
-                case 12: input_data[12].value = response.data.projects[0].ondas_telhado
+                case 12: input_data[12].value = response.projects[0].ondas_telhado
                 break;
                 
-                case 13: input_data[13].value = response.data.projects[0].tipo_acabamento
+                case 13: input_data[13].value = response.projects[0].tipo_acabamento
                 break;
                 
-                case 14: input_data[14].value = response.data.projects[0].cor_tinta
+                case 14: input_data[14].value = response.projects[0].cor_tinta
                 break;
                 
-                case 15: input_data[15].value = response.data.projects[0].titulo_projeto
+                case 15: input_data[15].value = response.projects[0].titulo_projeto
                 fillOutput()
                 break;
             }
@@ -125,76 +129,6 @@ async function fillData(response: any) {
     }
 }   
 
-arrow1.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input1.style.display == 'none') {
-        input1.style.display = 'block';
-    } else {
-        input1.style.display = 'none';
-    }
-})
-
-arrow2.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input2.style.display == 'none') {
-        input2.style.display = 'block';
-    } else {
-        input2.style.display = 'none';
-    }
-})
-
-arrow3.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input3.style.display == 'none') {
-        input3.style.display = 'block';
-    } else {
-        input3.style.display = 'none';
-    }
-})
-
-arrow4.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input4.style.display == 'none') {
-        input4.style.display = 'block';
-    } else {
-        input4.style.display = 'none';
-    }
-})
-
-arrow5.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input5.style.display == 'none') {
-        input5.style.display = 'block';
-    } else {
-        input5.style.display = 'none';
-    }
-})
-
-arrow6.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input6.style.display == 'none') {
-        input6.style.display = 'block';
-    } else {
-        input6.style.display = 'none';
-    }
-})
-
-arrow7.addEventListener('click', async (event: Event) => {
-    event.preventDefault()
-
-    if (input7.style.display == 'none') {
-        input7.style.display = 'block';
-    } else {
-        input7.style.display = 'none';
-    }
-})
-
 form.addEventListener('submit', async (event: Event) => {
     event.preventDefault
     fillOutput()
@@ -202,11 +136,9 @@ form.addEventListener('submit', async (event: Event) => {
 
 async function fillOutput() {
     var inputs:Array<any> = [];
-    console.log(idProjeto)
 
     for (var i:any = 0; i < 16; i++) {
         inputs[i] = document.querySelector(`#inputData${i}`)
-        console.log(inputs[i].value)
     }
 
     var lado_a = parseFloat(inputs[0].value)
@@ -287,11 +219,9 @@ async function fillOutput() {
     if (ondas_telhado == 1) {
         tamanho2 = 0.27
         preco_telha = 3.3
-        console.log('a')
     } else if (ondas_telhado == 2) {
         tamanho2 = 0.37
         preco_telha = 4.9
-        console.log('b')
     }
     var area_telhado = (area_piso * (lado_a / 2 * 0.25)) / 2
     qtd_telha.value = parseFloat(Math.round(area_telhado / (tamanho1 * tamanho2)) + '')
@@ -305,7 +235,6 @@ async function fillOutput() {
     /** Areia e cimento */
 
     var parede = (lado_a + lado_b + lado_c + lado_d) * altura
-    console.log(lado_a, lado_b, lado_c, lado_d, altura, parede)
     var largura = 0
     var altura_bloco = 0
     var comprimento = 0
@@ -319,9 +248,8 @@ async function fillOutput() {
         altura_bloco = 19
         comprimento = 19
     }
-    console.log(largura)
 
-    qtd_areia.value = parseFloat(parede * 0.02 * largura * (altura * 100 / (altura_bloco + 2)) + '')
+    qtd_areia.value = parseFloat(parede * 0.02 * largura * (altura * 100 / (altura_bloco + 2)) + '').toFixed(2)
     qtd_cimento.value = parseFloat(Math.round(parede * 5) / 40 + '')
 
     custo_areia.value = 'R$' + Math.round(qtd_areia.value * 120)
@@ -337,7 +265,7 @@ async function fillOutput() {
     if (material_parede == 'Bloco') {
         area_tijolo = 0.39*0.19
     } else if (material_parede == 'Tijolo') {
-        area_tijolo = 0.19 * 0,19
+        area_tijolo = 0.19 * 0.19
     }
 
     qtd_tijolo.value = parseFloat(Math.round(parede / area_tijolo) + '')
