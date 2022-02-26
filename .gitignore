@@ -1,4 +1,8 @@
+dist
 node_modules
+package-lock.json
 database.sql
-code.rar
+.cache
+.vscode
+.prettierrc
 

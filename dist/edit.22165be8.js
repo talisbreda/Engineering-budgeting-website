@@ -3156,15 +3156,8 @@ var todoUser = {
 var todoProject = {
   id_projeto: idProjeto
 };
-var arrows = [];
-var input_data = document.querySelectorAll('.inputData'); // for (var i = 0; i < 7; i++) {
-//     arrows[i] = document.querySelector(`#arrow${i}`)
-//     if (arrows[i]) {
-//         arrows[i].addEventListener('click', async (event:Event) => {
-//             expandCollapse(arrows[i])
-//         })
-//     }
-// }
+var arrows = document.querySelectorAll('.arrow').forEach(expandCollapse);
+var input_data = document.querySelectorAll('.inputData');
 
 window.onload = function () {
   return __awaiter(this, void 0, void 0, function () {
@@ -3199,15 +3192,27 @@ window.onload = function () {
       }
     });
   });
-}; // function expandCollapse(element: any) {
-//     const row: any = document.querySelector(`#input${element.id}`)
-//     if (row.style.display == 'none') {
-//         row.style.display = 'block';
-//     } else {
-//         row.style.display = 'none';
-//     }
-// }
+};
 
+function expandCollapse(arrow) {
+  return __awaiter(this, void 0, void 0, function () {
+    var element_id, block;
+    return __generator(this, function (_a) {
+      element_id = arrow.id.split('arrow')[1];
+      block = document.querySelector("#input".concat(element_id));
+      arrow.addEventListener('click', function (event) {
+        if (block.style.display == 'none') {
+          block.style.display = 'block';
+        } else {
+          block.style.display = 'none';
+        }
+      });
+      return [2
+      /*return*/
+      ];
+    });
+  });
+}
 
 function fillData() {
   return __awaiter(this, void 0, void 0, function () {
@@ -3483,7 +3488,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62397" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59169" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

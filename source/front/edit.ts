@@ -32,17 +32,8 @@ const todoProject = {
     id_projeto: idProjeto
 }
 
-var arrows:Array<any> = [];
+var arrows = document.querySelectorAll('.arrow').forEach(expandCollapse)
 var input_data: any = document.querySelectorAll('.inputData')
-
-// for (var i = 0; i < 7; i++) {
-//     arrows[i] = document.querySelector(`#arrow${i}`)
-//     if (arrows[i]) {
-//         arrows[i].addEventListener('click', async (event:Event) => {
-//             expandCollapse(arrows[i])
-//         })
-//     }
-// }
 
 window.onload = async function() {
     if (document.cookie.includes('new=true')) {
@@ -57,14 +48,17 @@ window.onload = async function() {
     
 }
 
-// function expandCollapse(element: any) {
-//     const row: any = document.querySelector(`#input${element.id}`)
-//     if (row.style.display == 'none') {
-//         row.style.display = 'block';
-//     } else {
-//         row.style.display = 'none';
-//     }
-// }
+async function expandCollapse(arrow:any) {
+    const element_id = arrow.id.split('arrow')[1]
+    const block:any = document.querySelector(`#input${element_id}`)
+    arrow.addEventListener('click', (event:Event) => {
+        if (block.style.display == 'none') {
+            block.style.display = 'block'
+        } else {
+            block.style.display = 'none'
+        }
+    })
+}
 
 async function fillData() {
     const responseProject = await axios.post(`${base_url}/get/project`, todoProject);
