@@ -32,7 +32,6 @@ const todoProject = {
     id_projeto: idProjeto
 }
 
-var arrows = document.querySelectorAll('.arrow').forEach(expandCollapse)
 var input_data: any = document.querySelectorAll('.inputData')
 
 window.onload = async function() {
@@ -43,11 +42,12 @@ window.onload = async function() {
 
         document.cookie = `projectID=${project_id}`;        
     } else {
-        fillData()
+        await fillData()
+        await fillOutput()
     }
-    
 }
 
+document.querySelectorAll('.arrow').forEach(expandCollapse)
 async function expandCollapse(arrow:any) {
     const element_id = arrow.id.split('arrow')[1]
     const block:any = document.querySelector(`#input${element_id}`)
@@ -60,62 +60,16 @@ async function expandCollapse(arrow:any) {
     })
 }
 
+
 async function fillData() {
     const responseProject = await axios.post(`${base_url}/get/project`, todoProject);
     const responseData = responseProject.data
+    const projectData = Object.values(responseData.projects[0])
+
     try {
         for (var i = 0; i < input_data.length; i++) {
-            switch (i) {
-                case 0: input_data[0].value = responseData.projects[0].lado_a
-                break;
-
-                case 1: input_data[1].value = responseData.projects[0].lado_b
-                break;
-                
-                case 2: input_data[2].value = responseData.projects[0].lado_c
-                break;
-                
-                case 3: input_data[3].value = responseData.projects[0].lado_d
-                break;
-                
-                case 4: input_data[4].value = responseData.projects[0].altura
-                break;
-                
-                case 5: input_data[5].value = responseData.projects[0].material_parede
-                break;
-                
-                case 6: input_data[6].value = responseData.projects[0].cimento
-                break;
-                
-                case 7: input_data[7].value = responseData.projects[0].tipo_piso
-                break;
-                
-                case 8: input_data[8].value = responseData.projects[0].tamanho_piso
-                break;
-                
-                case 9: input_data[9].value = responseData.projects[0].argamassa
-                break;
-                
-                case 10: input_data[10].value = responseData.projects[0].material_telhado
-                break;
-                
-                case 11: input_data[11].value = responseData.projects[0].cor_telhado
-                break;
-                
-                case 12: input_data[12].value = responseData.projects[0].ondas_telhado
-                break;
-                
-                case 13: input_data[13].value = responseData.projects[0].tipo_acabamento
-                break;
-                
-                case 14: input_data[14].value = responseData.projects[0].cor_tinta
-                break;
-                
-                case 15: input_data[15].value = responseData.projects[0].titulo_projeto
-                fillOutput()
-                break;
-            }
-}
+            input_data[i].value = projectData[i]
+        }
     } catch (e) {
         console.log(e)
         alert('Failed loading project data')
@@ -123,71 +77,65 @@ async function fillData() {
 }   
 
 form.addEventListener('submit', async (event: Event) => {
-    event.preventDefault
+    event.preventDefault()
     fillOutput()
 })
 
 async function fillOutput() {
-    var inputs:Array<any> = [];
-
-    for (var i:any = 0; i < 16; i++) {
-        inputs[i] = document.querySelector(`#inputData${i}`)
-    }
-
-    var lado_a = parseFloat(inputs[0].value)
-    var lado_b = parseFloat(inputs[1].value)
-    var lado_c = parseFloat(inputs[2].value)
-    var lado_d = parseFloat(inputs[3].value)
-    var altura = parseFloat(inputs[4].value)
-    var material_parede = inputs[5].value
-    var cimento = inputs[6].value
-    var tipo_piso = inputs[7].value
-    var tamanho_piso = inputs[8].value
-    var argamassa = inputs[9].value
-    var material_telhado = inputs[10].value
-    var cor_telhado = inputs[11].value
-    var ondas_telhado = inputs[12].value
-    var tipo_acabamento = inputs[13].value
-    var cor_tinta = inputs[14].value
-    var titulo_projeto = inputs[15].value
+    var lado_a = parseFloat(input_data[0].value)
+    var lado_b = parseFloat(input_data[1].value)
+    var lado_c = parseFloat(input_data[2].value)
+    var lado_d = parseFloat(input_data[3].value)
+    var altura = parseFloat(input_data[4].value)
+    var material_parede = input_data[5].value
+    var cimento = input_data[6].value
+    var tipo_piso = input_data[7].value
+    var tamanho_piso = input_data[8].value
+    var argamassa = input_data[9].value
+    var material_telhado = input_data[10].value
+    var cor_telhado = input_data[11].value
+    var ondas_telhado = input_data[12].value
+    var tipo_acabamento = input_data[13].value
+    var cor_tinta = input_data[14].value
+    var titulo_projeto = input_data[15].value
  
 
     const todoGeral: {
         id: number,
-        titulo_projeto: string,
         lado_a: number,
         lado_b: number,
         lado_c: number,
         lado_d: number,
         altura: number,
-        material_telhado: string,
-        cor_telhado: string,
-        ondas_telhado: number,
         material_parede: string,
         cimento: string,
         tipo_piso: string,
         tamanho_piso: number,
         argamassa: string,
+        material_telhado: string,
+        cor_telhado: string,
+        ondas_telhado: string,
         tipo_acabamento: string,
         cor_tinta: string,
+        titulo_projeto: string
     } = {
         id: idProjeto,
-        titulo_projeto: titulo_projeto,
         lado_a: lado_a,
         lado_b: lado_b,
         lado_c: lado_c,
         lado_d: lado_d,
         altura: altura,
-        material_telhado: material_telhado,
-        cor_telhado: cor_telhado,
-        ondas_telhado: ondas_telhado,
         material_parede: material_parede,
         cimento: cimento,
         tipo_piso: tipo_piso,
         tamanho_piso: tamanho_piso,
         argamassa: argamassa,
+        material_telhado: material_telhado,
+        cor_telhado: cor_telhado,
+        ondas_telhado: ondas_telhado, 
         tipo_acabamento: tipo_acabamento,
         cor_tinta: cor_tinta,
+        titulo_projeto: titulo_projeto,
     }
     const responseGeral = await axios.put(`${base_url}/update/project`, todoGeral);
 

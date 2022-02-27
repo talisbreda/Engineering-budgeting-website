@@ -326,9 +326,10 @@ const createProject = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 const updateProject = async (req: Request, res: Response, next: NextFunction) => {
-    let { id, titulo_projeto, lado_a, lado_b, lado_c, lado_d, altura, material_telhado, cor_telhado,
-        ondas_telhado, material_parede, cimento, tipo_piso, tamanho_piso, argamassa, tipo_acabamento,
-        cor_tinta } = req.body;
+    let { id, lado_a, lado_b, lado_c, lado_d, altura, material_parede, cimento, 
+        tipo_piso, tamanho_piso, argamassa, material_telhado, cor_telhado,
+        ondas_telhado, tipo_acabamento, cor_tinta, titulo_projeto
+    } = req.body;
 
     let query = `UPDATE 
                     projeto 
