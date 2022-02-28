@@ -102,10 +102,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 button {
-    position: absolute;
     border: 0;
     z-index: 10;
-    width: calc(49vw - 2px);
+    width: calc(50vw - 2px);
     height: 5vh;
     background-color: deepskyblue;
     font-family: var(--font-roboto);
