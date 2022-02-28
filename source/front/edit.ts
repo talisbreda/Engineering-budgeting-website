@@ -120,25 +120,7 @@ async function fillOutput() {
     var titulo_projeto = input_data[15].value
  
     
-    const todoGeral: {
-        id: number,
-        lado_a: number,
-        lado_b: number,
-        lado_c: number,
-        lado_d: number,
-        altura: number,
-        material_parede: string,
-        cimento: string,
-        tipo_piso: string,
-        tamanho_piso: number,
-        argamassa: string,
-        material_telhado: string,
-        cor_telhado: string,
-        ondas_telhado: string,
-        tipo_acabamento: string,
-        cor_tinta: string,
-        titulo_projeto: string
-    } = {
+    const todoGeral = {
         id: idProjeto,
         lado_a: lado_a,
         lado_b: lado_b,
@@ -158,8 +140,7 @@ async function fillOutput() {
         titulo_projeto: titulo_projeto,
     }
     /** Calling the API to update the database with the values on the inputs */
-    const responseGeral = await axios.put(`${base_url}/update/project`, todoGeral);
-
+    await axios.put(`${base_url}/update/project`, todoGeral);
     /** Filling the right side of the page, with quantities and costs */
 
     /** Floor */
