@@ -47,11 +47,11 @@ window.onload = async function() {
     }
 }
 
-document.querySelectorAll('.arrow').forEach(expandCollapse)
-async function expandCollapse(arrow:any) {
-    const element_id = arrow.id.split('arrow')[1]
+document.querySelectorAll('.title').forEach(expandCollapse)
+async function expandCollapse(title:any) {
+    const element_id = title.id.split('title')[1]
     const block:any = document.querySelector(`#input${element_id}`)
-    arrow.addEventListener('click', (event:Event) => {
+    title.addEventListener('click', (event:Event) => {
         if (block.style.display == 'none') {
             block.style.display = 'block'
         } else {
