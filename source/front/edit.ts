@@ -94,7 +94,12 @@ async function fillData() {
 const form:any = document.querySelector('form')
 form.addEventListener('submit', async (event: Event) => {
     event.preventDefault()
-    fillOutput()
+    try {
+        fillOutput()
+    } catch (e) {
+        console.log(e)
+    }
+    
 })
 
 /** This function is responsible for filling the inputs on the right side of the page,
@@ -143,18 +148,39 @@ async function fillOutput() {
         cor_tinta: cor_tinta,
         titulo_projeto: titulo_projeto,
     }
-    /** Calling the API to update the database with the values on the inputs */
-    await axios.put(`${base_url}/update/project`, todoGeral).catch((e) => {
-        console.log(e)
-        alert('Error saving project:')
-    });
-    /** Filling the right side of the page, with quantities and costs */
-    fillFloorOutput()
-    fillRoofOutput()
-    fillSandCementOutput()
-    fillBrickOutput()
-    fillGroutOutput()
-    fillPaintOutput()
+
+    try {
+        /** Calling the API to update the database with the values on the inputs */
+        await axios.put(`${base_url}/update/project`, todoGeral)
+        /** Filling the right side of the page, with quantities and costs */
+        fillFloorOutput()
+        fillRoofOutput()
+        fillSandCementOutput()
+        fillBrickOutput()
+        fillGroutOutput()
+        fillPaintOutput()
+
+        var preco_total = 
+                  parseInt(custo_areia.value.split('R$')[1])
+                + parseInt(custo_cimento.value.split('R$')[1])
+                + parseInt(custo_tijolo.value.split('R$')[1])
+                + parseInt(custo_piso.value.split('R$')[1])
+                + parseInt(custo_argamassa.value.split('R$')[1])
+                + parseInt(custo_telha.value.split('R$')[1])
+                + parseInt(custo_tinta.value.split('R$')[1])
+        custo_total.value = 'R$' + preco_total
+
+    } catch (e) {
+        for (var i = 0; i < input_data.length; i++) {
+            console.log(input_data[i])
+            if (input_data[i].value == null || 
+                input_data[i].value == undefined || 
+                input_data[i].value == '') {
+                alert("One or more input slots are empty, couldn't update project")
+                break
+            }
+        }
+    }  
 
     /** Floor */
     async function fillFloorOutput() {
@@ -253,14 +279,5 @@ async function fillOutput() {
     }
 
     /** Total cost */
-    var preco_total = 
-                  parseInt(custo_areia.value.split('R$')[1])
-                + parseInt(custo_cimento.value.split('R$')[1])
-                + parseInt(custo_tijolo.value.split('R$')[1])
-                + parseInt(custo_piso.value.split('R$')[1])
-                + parseInt(custo_argamassa.value.split('R$')[1])
-                + parseInt(custo_telha.value.split('R$')[1])
-                + parseInt(custo_tinta.value.split('R$')[1])
-    custo_total.value = 'R$' + preco_total
 
 }
