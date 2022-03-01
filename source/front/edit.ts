@@ -118,6 +118,10 @@ async function fillOutput() {
     var tipo_acabamento = input_data[13].value
     var cor_tinta = input_data[14].value
     var titulo_projeto = input_data[15].value
+
+    var area_piso = (lado_a) * (lado_b)
+    var preco_metro_piso = 0
+    var parede = (lado_a + lado_b + lado_c + lado_d) * altura
  
     
     const todoGeral = {
@@ -140,105 +144,115 @@ async function fillOutput() {
         titulo_projeto: titulo_projeto,
     }
     /** Calling the API to update the database with the values on the inputs */
-    await axios.put(`${base_url}/update/project`, todoGeral);
+    await axios.put(`${base_url}/update/project`, todoGeral).catch((e) => {
+        console.log(e)
+        alert('Error saving project:')
+    });
     /** Filling the right side of the page, with quantities and costs */
+    fillFloorOutput()
+    fillRoofOutput()
+    fillSandCementOutput()
+    fillBrickOutput()
+    fillGroutOutput()
+    fillPaintOutput()
 
     /** Floor */
-    var area_piso = (lado_a) * (lado_b)
-    qtd_piso.value = parseFloat(Math.round(area_piso / ((tamanho_piso / 100) * (tamanho_piso / 100))) + '')
-
-    var preco_metro_piso = 0
-    if (tipo_piso == 'Cerâmica') {
-        preco_metro_piso = 34.9
-    } else if (tipo_piso == 'Porcelanato') {
-        preco_metro_piso = 49.9
+    async function fillFloorOutput() {
+        qtd_piso.value = parseFloat(Math.round(area_piso / ((tamanho_piso / 100) * (tamanho_piso / 100))) + '')
+        if (tipo_piso == 'Cerâmica') {
+            preco_metro_piso = 34.9
+        } else if (tipo_piso == 'Porcelanato') {
+            preco_metro_piso = 49.9
+        }
+        custo_piso.value = 'R$' + Math.round((area_piso * preco_metro_piso))
+        
+        qtd_piso.value += ' Peças'
     }
-    custo_piso.value = 'R$' + Math.round((area_piso * preco_metro_piso))
     
-    qtd_piso.value += ' Peças'
-
     /** Roof */
-    const tamanho1 = 0.43
-    var tamanho2 = 0;
-    var preco_telha = 0;
-    if (ondas_telhado == 1) {
-        tamanho2 = 0.27
-        preco_telha = 3.3
-    } else if (ondas_telhado == 2) {
-        tamanho2 = 0.37
-        preco_telha = 4.9
-    }
-    var area_telhado = (area_piso * (lado_a / 2 * 0.25)) / 2
-    qtd_telha.value = parseFloat(Math.round(area_telhado / (tamanho1 * tamanho2)) + '')
+    async function fillRoofOutput() {
+        const tamanho1 = 0.43
+        var tamanho2 = 0;
+        var preco_telha = 0;
+        if (ondas_telhado == 1) {
+            tamanho2 = 0.27
+            preco_telha = 3.3
+        } else if (ondas_telhado == 2) {
+            tamanho2 = 0.37
+            preco_telha = 4.9
+        }
+        var area_telhado = (area_piso * (lado_a / 2 * 0.25)) / 2
+        qtd_telha.value = parseFloat(Math.round(area_telhado / (tamanho1 * tamanho2)) + '')
 
-    custo_telha.value = 'R$' + Math.round(qtd_telha.value * preco_telha)
+        custo_telha.value = 'R$' + Math.round(qtd_telha.value * preco_telha)
 
-    qtd_telha.value += ' Telhas'
-
-
-
-    /** Sand and cement */
-
-    var parede = (lado_a + lado_b + lado_c + lado_d) * altura
-    var largura = 0
-    var altura_bloco = 0
-    var comprimento = 0
-
-    if (material_parede == 'Bloco') {
-        largura = 0.14
-        altura_bloco = 19
-        comprimento = 39
-    } else if (material_parede == 'Tijolo') {
-        largura = 0.11
-        altura_bloco = 19
-        comprimento = 19
-    }
-
-    qtd_areia.value = parseFloat(parede * 0.02 * largura * (altura * 100 / (altura_bloco + 2)) + '').toFixed(2)
-    qtd_cimento.value = parseFloat(Math.round(parede * 5) / 40 + '')
-
-    custo_areia.value = 'R$' + Math.round(qtd_areia.value * 120)
-    custo_cimento.value = 'R$' + Math.round(qtd_cimento.value * 22)
-
-    qtd_areia.value += ' m³'
-    qtd_cimento.value += ' Sacos'
-
-    /** Bricks and blocks */
-
-    var area_tijolo = 0
+        qtd_telha.value += ' Telhas'
+    }   
     
-    if (material_parede == 'Bloco') {
-        area_tijolo = 0.39*0.19
-    } else if (material_parede == 'Tijolo') {
-        area_tijolo = 0.19 * 0.19
-    }
+    /** Sand and cement */
+    async function fillSandCementOutput() {
+        var largura = 0
+        var altura_bloco = 0
+        var comprimento = 0
 
-    qtd_tijolo.value = parseFloat(Math.round(parede / area_tijolo) + '')
-    custo_tijolo.value = 'R$' + Math.round(qtd_tijolo.value * 0.46)
-    qtd_tijolo.value += ' ' + material_parede + 's'
+        if (material_parede == 'Bloco') {
+            largura = 0.14
+            altura_bloco = 19
+            comprimento = 39
+        } else if (material_parede == 'Tijolo') {
+            largura = 0.11
+            altura_bloco = 19
+            comprimento = 19
+        }
+
+        qtd_areia.value = parseFloat(parede * 0.02 * largura * (altura * 100 / (altura_bloco + 2)) + '').toFixed(2)
+        qtd_cimento.value = parseFloat(Math.round(parede * 5) / 40 + '')
+
+        custo_areia.value = 'R$' + Math.round(qtd_areia.value * 120)
+        custo_cimento.value = 'R$' + Math.round(qtd_cimento.value * 22)
+
+        qtd_areia.value += ' m³'
+        qtd_cimento.value += ' Sacos'
+    }
+    
+    /** Bricks and blocks */
+    async function fillBrickOutput() {
+        var area_tijolo = 0
+    
+        if (material_parede == 'Bloco') {
+            area_tijolo = 0.39*0.19
+        } else if (material_parede == 'Tijolo') {
+            area_tijolo = 0.19 * 0.19
+        }
+    
+        qtd_tijolo.value = parseFloat(Math.round(parede / area_tijolo) + '')
+        custo_tijolo.value = 'R$' + Math.round(qtd_tijolo.value * 0.46)
+        qtd_tijolo.value += ' ' + material_parede + 's'
+    }
 
     /** Grout */
+    async function fillGroutOutput() {
+        var argamassa_piso = 0
 
-    var argamassa_piso = 0
-
-    if (tipo_piso == 'Cerâmica') {
-        argamassa_piso = 6
-    } else if (tipo_piso == 'Porcelanato') {
-        argamassa_piso = 8
+        if (tipo_piso == 'Cerâmica') {
+            argamassa_piso = 6
+        } else if (tipo_piso == 'Porcelanato') {
+            argamassa_piso = 8
+        }
+    
+        qtd_argamassa.value = parseFloat((area_piso * argamassa_piso) + '')
+        custo_argamassa.value = 'R$' + Math.round(qtd_argamassa.value * 1.5)
+        qtd_argamassa.value += ' kg'
     }
 
-    qtd_argamassa.value = parseFloat((area_piso * argamassa_piso) + '')
-    custo_argamassa.value = 'R$' + Math.round(qtd_argamassa.value * 1.5)
-    qtd_argamassa.value += ' kg'
-
     /** Paint */
-
-    qtd_tinta.value = parseFloat((parede * 2) / 10 + '')
-    custo_tinta.value = 'R$' + Math.round(qtd_tinta.value * 40)
-    qtd_tinta.value += ' L'
+    async function fillPaintOutput() {
+        qtd_tinta.value = parseFloat((parede * 2) / 10 + '')
+        custo_tinta.value = 'R$' + Math.round(qtd_tinta.value * 40)
+        qtd_tinta.value += ' L'
+    }
 
     /** Total cost */
-
     var preco_total = 
                   parseInt(custo_areia.value.split('R$')[1])
                 + parseInt(custo_cimento.value.split('R$')[1])
