@@ -118,11 +118,9 @@ async function fillOutput() {
     var tamanho_piso = input_data[8].value
     var argamassa = input_data[9].value
     var material_telhado = input_data[10].value
-    var cor_telhado = input_data[11].value
-    var ondas_telhado = input_data[12].value
-    var tipo_acabamento = input_data[13].value
-    var cor_tinta = input_data[14].value
-    var titulo_projeto = input_data[15].value
+    var ondas_telhado = input_data[11].value
+    var tipo_acabamento = input_data[12].value
+    var titulo_projeto = input_data[13].value
 
     var area_piso = (lado_a) * (lado_b)
     var preco_metro_piso = 0
@@ -142,16 +140,15 @@ async function fillOutput() {
         tamanho_piso: tamanho_piso,
         argamassa: argamassa,
         material_telhado: material_telhado,
-        cor_telhado: cor_telhado,
         ondas_telhado: ondas_telhado, 
         tipo_acabamento: tipo_acabamento,
-        cor_tinta: cor_tinta,
         titulo_projeto: titulo_projeto,
     }
 
     try {
         /** Calling the API to update the database with the values on the inputs */
         await axios.put(`${base_url}/update/project`, todoGeral)
+        
         /** Filling the right side of the page, with quantities and costs */
         fillFloorOutput()
         fillRoofOutput()
@@ -160,6 +157,7 @@ async function fillOutput() {
         fillGroutOutput()
         fillPaintOutput()
 
+        /** Total cost */
         var preco_total = 
                   parseInt(custo_areia.value.split('R$')[1])
                 + parseInt(custo_cimento.value.split('R$')[1])
@@ -172,7 +170,6 @@ async function fillOutput() {
 
     } catch (e) {
         for (var i = 0; i < input_data.length; i++) {
-            console.log(input_data[i])
             if (input_data[i].value == null || 
                 input_data[i].value == undefined || 
                 input_data[i].value == '') {
@@ -277,7 +274,4 @@ async function fillOutput() {
         custo_tinta.value = 'R$' + Math.round(qtd_tinta.value * 40)
         qtd_tinta.value += ' L'
     }
-
-    /** Total cost */
-
 }

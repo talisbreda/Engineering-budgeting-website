@@ -327,8 +327,8 @@ const createProject = async (req: Request, res: Response, next: NextFunction) =>
 
 const updateProject = async (req: Request, res: Response, next: NextFunction) => {
     let { id, lado_a, lado_b, lado_c, lado_d, altura, material_parede, cimento, 
-        tipo_piso, tamanho_piso, argamassa, material_telhado, cor_telhado,
-        ondas_telhado, tipo_acabamento, cor_tinta, titulo_projeto
+        tipo_piso, tamanho_piso, argamassa, material_telhado,
+        ondas_telhado, tipo_acabamento, titulo_projeto
     } = req.body;
 
     let query = `UPDATE 
@@ -341,15 +341,13 @@ const updateProject = async (req: Request, res: Response, next: NextFunction) =>
                     lado_d = '${lado_d}',
                     altura = '${altura}',
                     material_telhado = '${material_telhado}',
-                    cor_telhado = '${cor_telhado}',
                     ondas_telhado = '${ondas_telhado}',
                     material_parede = '${material_parede}',
                     cimento = '${cimento}',
                     tipo_piso = '${tipo_piso}',
                     tamanho_piso = '${tamanho_piso}',
                     argamassa = '${argamassa}',
-                    tipo_acabamento = '${tipo_acabamento}',
-                    cor_tinta = '${cor_tinta}'
+                    tipo_acabamento = '${tipo_acabamento}'
                 WHERE 
                     id_projeto='${id}'`;
 
