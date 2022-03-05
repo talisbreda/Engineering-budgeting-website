@@ -4,7 +4,7 @@ import axios from 'axios';
 const base_url = 'http://localhost:1337';
 
 /** Splits the cookie to get the ID number of the user */
-var idUsuario = document.cookie.split('=')[1].split(';')[0]
+let idUsuario = document.cookie.split('=')[1].split(';')[0]
 
 /** Assigns variables to HTML elements */
 const header: any = document.querySelector('#header');
@@ -13,8 +13,8 @@ const topSidebar: any = document.querySelector('#topSidebar');
 const lowerSidebar: any = document.querySelector('#lowerSidebar');
 const sidebarButton: any = document.querySelector('#sidebarButton');
 const projects: any = document.querySelector('.projects');
-var projectsLine: any = document.querySelector('.projectsLine');
-var projectPlaceholder: any = document.querySelectorAll('.projectPlaceholder');
+let projectsLine: any = document.querySelector('.projectsLine');
+let projectPlaceholder: any = document.querySelectorAll('.projectPlaceholder');
 const projectName: any = document.querySelector('.projectName');
 const logoutButton: any = document.querySelector('#logout');
 const newProject: any = document.querySelector('#newProject')
@@ -32,10 +32,10 @@ async function getProjects() {
         const response = await axios.post(`${base_url}/get/projects`, todo);
 
         /** Assigns the projects fetched from the database to an array */
-        var projectsFetched = response.data.projects;
+        let projectsFetched = response.data.projects;
 
         /** Creates a counter to count the amount of projects in a line */
-        var count = 1;
+        let count = 1;
 
         for (let i = 0; i < projectsFetched.length; i++, count++) {
             /** Checks if the amount of projects in a line reached 3, and breaks the line if it did */

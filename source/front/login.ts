@@ -3,7 +3,7 @@ import axios from 'axios';
 
 /** General variables */
 const base_url = 'http://localhost:1337';
-var id: any = 0;
+let id: any = 0;
 
 /** Variables to HTML elements */
 const form: any = document.querySelector('form');

@@ -7,23 +7,23 @@ const base_url = 'http://localhost:1337';
 const idUsuario:any = document.cookie.split('user=')[1].split(';')[0]
 const idProjeto:any = document.cookie.split('projectID=')[1].split(';')[0]
 
-/** Assigns a variable to each of the inputs on the right side of the page */
-var qtd_areia: any = document.querySelector('#qtd_areia')
-var qtd_cimento: any = document.querySelector('#qtd_cimento')
-var qtd_tijolo: any = document.querySelector('#qtd_tijolo')
-var qtd_piso: any = document.querySelector('#qtd_piso')
-var qtd_argamassa: any = document.querySelector('#qtd_argamassa')
-var qtd_telha: any = document.querySelector('#qtd_telha')
-var qtd_tinta: any = document.querySelector('#qtd_tinta')
+/** Assigns variable to each of the inputs on the right side of the page */
+let qtd_areia: any = document.querySelector('#qtd_areia')
+let qtd_cimento: any = document.querySelector('#qtd_cimento')
+let qtd_tijolo: any = document.querySelector('#qtd_tijolo')
+let qtd_piso: any = document.querySelector('#qtd_piso')
+let qtd_argamassa: any = document.querySelector('#qtd_argamassa')
+let qtd_telha: any = document.querySelector('#qtd_telha')
+let qtd_tinta: any = document.querySelector('#qtd_tinta')
 
-var custo_areia: any = document.querySelector('#custo_areia')
-var custo_tijolo: any = document.querySelector('#custo_tijolo')
-var custo_piso: any = document.querySelector('#custo_piso')
-var custo_cimento: any = document.querySelector('#custo_cimento')
-var custo_argamassa: any = document.querySelector('#custo_argamassa')
-var custo_telha: any = document.querySelector('#custo_telha')
-var custo_tinta: any = document.querySelector('#custo_tinta')
-var custo_total: any = document.querySelector('#custo_total')
+let custo_areia: any = document.querySelector('#custo_areia')
+let custo_tijolo: any = document.querySelector('#custo_tijolo')
+let custo_piso: any = document.querySelector('#custo_piso')
+let custo_cimento: any = document.querySelector('#custo_cimento')
+let custo_argamassa: any = document.querySelector('#custo_argamassa')
+let custo_telha: any = document.querySelector('#custo_telha')
+let custo_tinta: any = document.querySelector('#custo_tinta')
+let custo_total: any = document.querySelector('#custo_total')
 
 /** Creating objects containing the project and user's IDs, used for calling API routes later */
 const todoUser = {
@@ -33,7 +33,7 @@ const todoProject = {
     id_projeto: idProjeto
 }
 
-var input_data: any = document.querySelectorAll('.inputData')
+let input_data: any = document.querySelectorAll('.inputData')
 
 /** This function is called when the page is loaded. It looks for a specific cookie to check 
  *  if the loaded project is newly created or if it already existed */
@@ -82,7 +82,7 @@ async function fillData() {
 
     /** Tries to insert the data from the database to the inputs */
     try {
-        for (var i = 0; i < input_data.length; i++) {
+        for (let i = 0; i < input_data.length; i++) {
             input_data[i].value = projectData[i]
         }
     } catch (e) {
@@ -107,24 +107,24 @@ form.addEventListener('submit', async (event: Event) => {
 async function fillOutput() {
 
     /** Assigning a variable for each of the inputs */
-    var lado_a = parseFloat(input_data[0].value)
-    var lado_b = parseFloat(input_data[1].value)
-    var lado_c = parseFloat(input_data[2].value)
-    var lado_d = parseFloat(input_data[3].value)
-    var altura = parseFloat(input_data[4].value)
-    var material_parede = input_data[5].value
-    var cimento = input_data[6].value
-    var tipo_piso = input_data[7].value
-    var tamanho_piso = input_data[8].value
-    var argamassa = input_data[9].value
-    var material_telhado = input_data[10].value
-    var ondas_telhado = input_data[11].value
-    var tipo_acabamento = input_data[12].value
-    var titulo_projeto = input_data[13].value
+    let lado_a = parseFloat(input_data[0].value)
+    let lado_b = parseFloat(input_data[1].value)
+    let lado_c = parseFloat(input_data[2].value)
+    let lado_d = parseFloat(input_data[3].value)
+    let altura = parseFloat(input_data[4].value)
+    let material_parede = input_data[5].value
+    let cimento = input_data[6].value
+    let tipo_piso = input_data[7].value
+    let tamanho_piso = input_data[8].value
+    let argamassa = input_data[9].value
+    let material_telhado = input_data[10].value
+    let ondas_telhado = input_data[11].value
+    let tipo_acabamento = input_data[12].value
+    let titulo_projeto = input_data[13].value
 
-    var area_piso = (lado_a) * (lado_b)
-    var preco_metro_piso = 0
-    var parede = (lado_a + lado_b + lado_c + lado_d) * altura
+    let area_piso = (lado_a) * (lado_b)
+    let preco_metro_piso = 0
+    let parede = (lado_a + lado_b + lado_c + lado_d) * altura
  
     
     const todoGeral = {
@@ -158,7 +158,7 @@ async function fillOutput() {
         fillPaintOutput()
 
         /** Total cost */
-        var preco_total = 
+        let preco_total = 
                   parseInt(custo_areia.value.split('R$')[1])
                 + parseInt(custo_cimento.value.split('R$')[1])
                 + parseInt(custo_tijolo.value.split('R$')[1])
@@ -169,7 +169,7 @@ async function fillOutput() {
         custo_total.value = 'R$' + preco_total
 
     } catch (e) {
-        for (var i = 0; i < input_data.length; i++) {
+        for (let i = 0; i < input_data.length; i++) {
             if (input_data[i].value == null || 
                 input_data[i].value == undefined || 
                 input_data[i].value == '') {
@@ -195,8 +195,8 @@ async function fillOutput() {
     /** Roof */
     async function fillRoofOutput() {
         const tamanho1 = 0.43
-        var tamanho2 = 0;
-        var preco_telha = 0;
+        let tamanho2 = 0;
+        let preco_telha = 0;
         if (ondas_telhado == 1) {
             tamanho2 = 0.27
             preco_telha = 3.3
@@ -204,7 +204,7 @@ async function fillOutput() {
             tamanho2 = 0.37
             preco_telha = 4.9
         }
-        var area_telhado = (area_piso * (lado_a / 2 * 0.25)) / 2
+        let area_telhado = (area_piso * (lado_a / 2 * 0.25)) / 2
         qtd_telha.value = parseFloat(Math.round(area_telhado / (tamanho1 * tamanho2)) + '')
 
         custo_telha.value = 'R$' + Math.round(qtd_telha.value * preco_telha)
@@ -214,9 +214,9 @@ async function fillOutput() {
     
     /** Sand and cement */
     async function fillSandCementOutput() {
-        var largura = 0
-        var altura_bloco = 0
-        var comprimento = 0
+        let largura = 0
+        let altura_bloco = 0
+        let comprimento = 0
 
         if (material_parede == 'Bloco') {
             largura = 0.14
@@ -240,7 +240,7 @@ async function fillOutput() {
     
     /** Bricks and blocks */
     async function fillBrickOutput() {
-        var area_tijolo = 0
+        let area_tijolo = 0
     
         if (material_parede == 'Bloco') {
             area_tijolo = 0.39*0.19
@@ -255,7 +255,7 @@ async function fillOutput() {
 
     /** Grout */
     async function fillGroutOutput() {
-        var argamassa_piso = 0
+        let argamassa_piso = 0
 
         if (tipo_piso == 'Cerâmica') {
             argamassa_piso = 6
