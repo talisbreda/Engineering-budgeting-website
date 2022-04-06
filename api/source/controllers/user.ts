@@ -115,7 +115,7 @@ const login = (req: Request, res: Response, next: NextFunction) => {
                                 }
                             });
                         } else {
-                            res.status(400).json({ message: 'usuário não encontrado' });
+                            res.status(401).json({ message: 'usuário não encontrado' });
                         }
                     } catch (e) {
                         console.error(e);

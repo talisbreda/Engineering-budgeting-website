@@ -90,6 +90,10 @@ h1, h2, h3, h4, h5, h6 {
     width: calc(14vw + 2px);
 }
 
+.outputData:hover {
+    cursor: default;
+}
+
 select.inputData {
     height: 3.5vh;
     width: 15vw
