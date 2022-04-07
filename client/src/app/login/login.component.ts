@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  dataSource:any = 'localhost:1337/get/all'
+  displayedColumns = ['name', 'category']
+
+  constructor() {}
 
   ngOnInit(): void {
   }
