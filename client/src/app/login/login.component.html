@@ -1,13 +1,18 @@
-<mat-card>
+<div>
+<mat-card id = "login-card">
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Favorite food</mat-label>
-      <input matInput placeholder="Ex. Pizza" value="Sushi" />
+      <mat-label>E-mail</mat-label>
+      <input matInput placeholder="Your e-mail" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Leave a comment</mat-label>
-      <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Your password" type="password">
     </mat-form-field>
+
+    <button mat-raised-button color="primary">Login</button>
+
   </form>
 </mat-card>
+</div>
