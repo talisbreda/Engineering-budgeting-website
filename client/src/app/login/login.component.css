@@ -13,12 +13,10 @@ mat-card#login-card {
   color: black !important;
 }
 
-::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-  /*change color of label*/
+/* ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
   color: var(--focused-color);
  }
 
  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-  /*change color of label*/
   background-color: var(--focused-color);
- }
+ } */
