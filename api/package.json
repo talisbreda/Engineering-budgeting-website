@@ -4,8 +4,8 @@
   "description": "",
   "main": "source/server.ts",
   "scripts": {
-    "build": "parcel build source/front/*.html",
-    "dev": "parcel source/front/*.html "
+    "build": "parcel build ../client/source/*.html",
+    "dev": "parcel ../client/source/*.html "
   },
   "author": "",
   "license": "ISC",
