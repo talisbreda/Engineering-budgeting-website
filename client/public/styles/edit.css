@@ -1,0 +1,115 @@
+:root {
+    --font-roboto: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    font-family: var(--font-roboto);
+}
+
+
+
+
+#header {
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.headerChild {
+    width: 49vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headerChild > img {
+    height: 8vh;
+}
+
+.project {
+    height: 89vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.subBody {
+    width: 49vw;
+    height: 89vh;
+}
+
+.editNodes {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: lightslategray;
+}
+
+.title > h2 {
+    margin-left: 5vw;
+    width: 10vw;
+}
+
+.title > img {
+    width: 2vw;
+    height: 2vw;
+    margin-left: 25vw;
+}
+
+.title:hover {
+    cursor: pointer;
+}
+
+.inputText {
+    width: 10vw;
+    margin-left: 5vw;
+}
+
+.innerInputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.inputData, .outputData {
+    margin-left: 15vw;
+    height: 3vh;
+    width: calc(14vw + 2px);
+}
+
+.outputData:hover {
+    cursor: default;
+}
+
+select.inputData {
+    height: 3.5vh;
+    width: 15vw
+}
+
+button {
+    border: 0;
+    z-index: 10;
+    width: 49vw;
+    height: 5vh;
+    background-color: deepskyblue;
+    font-family: var(--font-roboto);
+    font-weight: bold;
+    font-size: 2vh;
+}
+
+button:hover {
+    background-color: #0aa8ef;
+}

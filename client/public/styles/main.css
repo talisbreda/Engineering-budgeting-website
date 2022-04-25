@@ -1,0 +1,235 @@
+:root {
+    --font-roboto: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    font-family: var(--font-roboto);
+}
+
+#header {
+    border: 2px solid black;
+    height: 15vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#header > h2 {
+    font-family: var(--font-roboto);
+    width: 65vw; 
+    text-align: center;
+}
+
+#header > img {
+    height: 8vh;
+    margin-left: 8vh;
+}
+
+#header > #logo {
+    margin-left: 10vh;
+}
+
+#header > #sidebarButton {
+    cursor: pointer;
+}
+
+#projectsSidebar {
+    display: flex;
+    flex-direction: row;
+}
+
+#sidebar {
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+}
+
+#sidebar > img {
+    height: 6vh;
+    width: 6vh;
+    margin-left: 1vh;
+    margin-top: 1vh
+}
+
+#sidebar > img:hover {
+    cursor: pointer;
+}
+
+.sidebarOptions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebarOptions > img {
+    max-width: 3vh;
+    max-height: 3vh;
+    margin-right: 2vh;
+    margin-left: 2vh;
+}
+
+.sidebarOptions > h3 {
+    font-family: var(--font-roboto);
+}
+
+.sidebarOptions > h3, .sidebarOptions > img:hover {
+    cursor: pointer;
+}
+
+#folderList > img {
+    max-height: 2vh;
+    max-width: 2vh;
+    margin-left: 2.5vh;
+    margin-right: 2.5vh;
+}
+
+#folderList {
+    margin-top: 10vh;
+}
+
+#config {
+    margin-top: 40vh;
+}
+
+
+.projects {
+    width: 75vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.projectsLine {
+    display: flex;
+    flex-direction: row;
+}
+
+.projectPlaceholder {
+    width: 20vw;
+    height: 15vh;
+    margin: 0;
+    margin-top: 8vw;
+    margin-left: 3vw;
+    border-radius: 3vh;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.projectPlaceholder :hover {
+    cursor: pointer;
+}
+
+.innerProjectPlaceholder {
+    width: 20vw;
+    height: 5vh;
+    border-radius: 3vh;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+    font-family: var(--font-roboto);
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.projectImage {
+    width: 9vh;
+    margin-top: 0.5vh;
+}
+
+@media (max-width: 800px) {
+    h3 {
+        font-size: 14px;
+    }
+
+    #header > #sidebarButton {
+        height: 7vh;
+        margin-left: 3vh
+    }
+
+    #header > #logo {
+        height: 7vh;
+        margin-left: 5vh;
+    }
+
+    .sidebarOptions {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #config {
+        margin-top: 32vh;
+    }
+
+    .innerProjectPlaceholder {
+        font-size: 1.2em;
+        top: 0.1em
+    }
+}
+
+@media (max-width: 600px) {
+    #folderList {
+        margin-top: 6vh
+        
+    }
+
+    .projectPlaceholder {
+        width: 60vw;
+    }
+
+    .innerProjectPlaceholder {
+        font-size: 1.1em;
+        width: 60vw;
+    }
+
+    .projectsLine {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 400px) {
+    #header {
+        flex-direction: row;
+    }
+
+    #header > #sidebarButton {
+        height: 5vh;
+        margin-left: 3vh
+    }
+
+    #header > #logo {
+        height: 5vh;
+        margin-left: 5vh;
+    }
+
+    .sidebarOptions {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #topSidebar > img {
+        margin-left: 5vw;
+    }
+
+    h3 {
+        font-size: 10px;
+    }
+
+    #config {
+        margin-top: 45vh;
+    }
+
+    .innerProjectPlaceholder {
+        font-size: 1em;
+    }
+}
+

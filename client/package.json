@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "axios": "^0.27.0",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}
