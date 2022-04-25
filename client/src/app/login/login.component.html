@@ -1,17 +1,19 @@
 <div>
 <mat-card id = "login-card">
+  <img src="../../assets/seagull logo.jfif" alt="">
+
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" appearance="fill" id="email-field">
       <mat-label>E-mail</mat-label>
-      <input matInput placeholder="Your e-mail" />
+      <input matInput placeholder="Your e-mail" autocomplete="off" />
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" appearance="fill" id="password-field">
       <mat-label>Password</mat-label>
       <input matInput placeholder="Your password" type="password">
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Login</button>
+    <button mat-raised-button color="primary" type="submit" id="loginButton">Login</button>
 
   </form>
 </mat-card>
