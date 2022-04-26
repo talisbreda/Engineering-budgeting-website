@@ -33,8 +33,16 @@ form.example-form > * {
 
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
   color: var(--focused-color);
- }
+}
 
- ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: var(--focused-color);
- }
+}
+
+p {
+  color: var(--focused-color);
+  text-align: center;
+  text-decoration: underline;
+  margin-top: 1rem;
+  cursor: pointer
+}
