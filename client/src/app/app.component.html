@@ -1,1 +1,1 @@
-<app-login></app-login>
+<app-login [childToMaster]="loginExists" (destroyLogin)="loginDestruction($event)" *ngIf="loginExists"></app-login>

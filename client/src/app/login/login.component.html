@@ -13,7 +13,9 @@
       <input matInput placeholder="Your password" type="password">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" id="loginButton">Login</button>
+    <button mat-raised-button color="primary" type="button" id="loginButton" (click)="login()" >Login</button>
+
+    <p (click)="redirectRegister()">Don't have an account? Register now!</p>
 
   </form>
 </mat-card>
