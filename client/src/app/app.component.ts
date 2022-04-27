@@ -8,9 +8,10 @@ import { LoginComponent } from './login/login.component';
 })
 export class AppComponent {
   loginExists: boolean = true
-  childData: string = "asd"
+  registerExists: boolean = false
 
-  loginDestruction(data: any) {
+  pageSwap(data: any) {
     this.loginExists = data
+    this.registerExists = !data;
   }
 }

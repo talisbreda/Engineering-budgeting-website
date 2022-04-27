@@ -22,7 +22,7 @@ import { EventEmitter } from '@angular/core';
 export class LoginComponent implements OnInit, OnChanges, DoCheck,
 AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, OnDestroy {
 
-  @Input('childToMaster') loginExists: boolean
+  @Input('destroyLogin') loginExists: boolean
   @Output() destroyLogin = new EventEmitter()
 
   login() {

@@ -1,1 +1,10 @@
-<app-login [childToMaster]="loginExists" (destroyLogin)="loginDestruction($event)" *ngIf="loginExists"></app-login>
+<app-login
+  [destroyLogin]="loginExists"
+  (destroyLogin)="pageSwap($event)"
+  *ngIf="loginExists">
+</app-login>
+<app-register
+  [destroyRegister]="registerExists"
+  (destroyRegister)="pageSwap($event)"
+  *ngIf="registerExists">
+</app-register>

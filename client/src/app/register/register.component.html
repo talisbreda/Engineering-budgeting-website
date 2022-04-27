@@ -1,0 +1,32 @@
+<div>
+  <mat-card id = "register-card">
+    <img src="../../assets/seagull logo.jfif" alt="">
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill" id="name-field">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Your name">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill" id="email-field">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="Your e-mail" autocomplete="off" />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill" id="password-field">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Your password" type="password">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill" id="confirm-password-field">
+        <mat-label>Confirm password</mat-label>
+        <input matInput placeholder="Confirm your password" type="password">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="button" id="registerButton" (click)="register()" >Register</button>
+
+      <p (click)="redirectLogin()">Already have an account? Sign In!</p>
+
+    </form>
+  </mat-card>
+  </div>
