@@ -31,7 +31,7 @@ AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, OnDestro
 
   redirectRegister() {
     this.loginExists = false;
-    console.log(this.loginExists)
+    console.log("Login exists: " + this.loginExists)
     this.destroyLogin.emit(this.loginExists)
   }
 
@@ -40,32 +40,12 @@ AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, OnDestro
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
   ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("ngOnChanges")
-  }
-
+  ngOnChanges(changes: SimpleChanges): void {}
   ngDoCheck(): void {}
-
   ngAfterContentChecked(): void {}
-
   ngAfterViewChecked(): void {}
-
   ngAfterContentInit(): void {}
-
-  ngAfterViewInit(): void { }
-
+  ngAfterViewInit(): void {}
   ngOnDestroy(): void {}
 }

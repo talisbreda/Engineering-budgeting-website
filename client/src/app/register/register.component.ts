@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, DoCheck, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Component, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -6,7 +6,8 @@ import { Component, Input, OnInit, Output } from '@angular/core';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnChanges, DoCheck,
+AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit {
 
   @Input('destroyRegister') registerExists: boolean
   @Output() destroyRegister = new EventEmitter()
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   redirectLogin() {
     this.registerExists = true;
-    console.log(this.registerExists)
+    console.log("Register exists: " + this.registerExists)
     this.destroyRegister.emit(this.registerExists)
   }
 
@@ -25,7 +26,14 @@ export class RegisterComponent implements OnInit {
     this.registerExists = false
    }
 
-  ngOnInit(): void {
-  }
+
+   ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {}
+  ngDoCheck(): void {}
+  ngAfterContentChecked(): void {}
+  ngAfterViewChecked(): void {}
+  ngAfterContentInit(): void {}
+  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {}
 
 }
