@@ -45,6 +45,7 @@ AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, OnDestro
       let response = await axios.post(`${this.BASE_URL}/login`, todo)
       alert(`Login successful, user: ${response.data.user.id_usuario}`)
     } catch (e) {
+      alert("Unauthorized")
       console.error
     }
   }
