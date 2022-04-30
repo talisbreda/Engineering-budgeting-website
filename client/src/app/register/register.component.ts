@@ -77,7 +77,7 @@ AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit {
    }
 
 
-   ngOnInit(): void {}
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {}
   ngDoCheck(): void {}
   ngAfterContentChecked(): void {}
