@@ -43,6 +43,7 @@ AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, OnDestro
 
     try {
       let response = await axios.post(`${this.BASE_URL}/login`, todo)
+      alert(`Login successful, user: ${response.data.user.id_usuario}`)
     } catch (e) {
       console.error
     }
