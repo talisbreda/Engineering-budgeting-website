@@ -1,0 +1,21 @@
+mat-toolbar > button {
+  position: absolute;
+  height: 3rem;
+  width: 3rem;
+}
+
+.mat-icon-button i, .mat-icon-button .mat-icon {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  width: 3rem;
+}
+
+span {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+}
