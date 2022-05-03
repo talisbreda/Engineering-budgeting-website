@@ -1,55 +1,45 @@
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {Component} from '@angular/core';
-import {MatTreeNestedDataSource} from '@angular/material/tree';
+import { Component } from '@angular/core';
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-interface FoodNode {
+export interface Section {
   name: string;
-  children?: FoodNode[];
+  updated: Date;
 }
 
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-  },
-  {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [{name: 'Broccoli'}, {name: 'Brussels sprouts'}],
-      },
-      {
-        name: 'Orange',
-        children: [{name: 'Pumpkins'}, {name: 'Carrots'}],
-      },
-    ],
-  },
-  {
-    name: 'a',
-    children: [{name: 'b'}, {name: 'c'}]
-  }
-];
-
-/**
- * @title Tree with nested nodes
- */
 @Component({
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
 })
 export class HomeComponent {
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
+
+  folders: Section[] = [
+    {
+      name: 'Photos',
+      updated: new Date('1/1/16'),
+    },
+    {
+      name: 'Recipes',
+      updated: new Date('1/17/16'),
+    },
+    {
+      name: 'Work',
+      updated: new Date('1/28/16'),
+    },
+  ];
+  notes: Section[] = [
+    {
+      name: 'Vacation Itinerary',
+      updated: new Date('2/20/16'),
+    },
+    {
+      name: 'Kitchen Remodel',
+      updated: new Date('1/18/16'),
+    },
+  ];
 
   constructor() {
-    this.dataSource.data = TREE_DATA;
+
   }
 
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+
 }

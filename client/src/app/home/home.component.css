@@ -1,7 +1,11 @@
 mat-toolbar > button {
-  position: fixed;
+  position: absolute;
   height: 3rem;
   width: 3rem;
+}
+
+.mat-toolbar-single-row {
+  height: 6vh;
 }
 
 .mat-icon-button i, .mat-icon-button .mat-icon {
@@ -21,7 +25,7 @@ span {
 }
 
 .example-container {
-  height: 100%;
+  height: 94vh;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
@@ -37,29 +41,10 @@ span {
   padding: 20px;
 }
 
-.example-tree-invisible {
-  display: none;
+mat-list {
+  position: relative;
 }
 
-.example-tree ul,
-.example-tree li {
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: none;
-}
-
-/*
- * This padding sets alignment of the nested nodes.
- */
-.example-tree .mat-nested-tree-node div[role=group] {
-  padding-left: 40px;
-}
-
-/*
- * Padding for leaf nodes.
- * Leaf nodes need to have padding so as to align with other non-leaf nodes
- * under the same parent.
- */
-.example-tree div[role=group] > .mat-tree-node {
-  padding-left: 40px;
+#settings-icon {
+  margin-top: 63vh;
 }
