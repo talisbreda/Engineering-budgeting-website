@@ -48,3 +48,7 @@ mat-list {
 #settings-icon {
   margin-top: 63vh;
 }
+
+mat-list > div.mat-subheader {
+  cursor: pointer;
+}
