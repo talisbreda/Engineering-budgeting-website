@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="drawer.toggle()">
+  <button mat-icon-button (click)="toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>HOME</span>
@@ -36,6 +36,16 @@
     </mat-list>
 
   </mat-drawer>
+
+  <div class="projects" #projects>
+    <app-placeholder></app-placeholder>
+    <app-placeholder></app-placeholder>
+    <app-placeholder></app-placeholder>
+    <app-placeholder></app-placeholder>
+    <app-placeholder></app-placeholder>
+  </div>
+
+
 
 
 </mat-drawer-container>

@@ -37,7 +37,7 @@ span {
 }
 
 .example-sidenav {
-  width: 20%;
+  width: 20vw;
   padding: 20px;
 }
 
@@ -51,4 +51,9 @@ mat-list {
 
 mat-list > div.mat-subheader {
   cursor: pointer;
+}
+
+.projects {
+  display: inline-grid;
+  grid-template-columns: 20vw 20vw 20vw 20vw;
 }
